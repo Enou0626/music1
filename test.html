@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .outer {
+            display: flex;
+            background-color: pink;
+            height: 500px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+        .inner {
+            /* flex: 1; */
+            background-color: skyblue;
+            font-size: 20px;
+            /* padding: 5px; */
+            border: 1px solid gray;
+            height: 30px;
+
+        }
+
+        .inner:nth-child(1) {
+            background-color: #fff;
+            flex: auto;
+
+        }
+
+        .inner:nth-child(2) {
+            background-color: #fff;
+            flex: auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <!-- <div class="inner">
+            inner
+        </div>
+        <div class="inner">
+            inner
+        </div>
+        <div class="inner">
+            inner
+        </div>
+        <div class="inner">
+            inner
+        </div>
+        <div class="inner">
+            inner
+        </div>
+        <div class="inner">
+            inner
+        </div> -->
+        <div class="inner">
+            inner1
+        </div>
+        <div class="inner">
+            inner2
+        </div>
+    </div>
+</body>
+
+</html>
