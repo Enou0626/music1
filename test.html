@@ -3,72 +3,63 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .outer {
-            display: flex;
-            background-color: pink;
-            height: 500px;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+        .over {
+            background-color: #66d3ff;
+            width: 400px;
+            float: left;
+            padding: 10px 10px;
         }
 
-
-
-        .inner {
-            /* flex: 1; */
-            background-color: skyblue;
-            font-size: 20px;
-            /* padding: 5px; */
-            border: 1px solid gray;
-            height: 30px;
-
+        .enter {
+            background-color: #66d3ff;
+            width: 400px;
+            float: left;
+            margin-left: 30px;
+            padding: 10px 10px;
         }
 
-        .inner:nth-child(1) {
+        h2 {
             background-color: #fff;
-            flex: auto;
-
-        }
-
-        .inner:nth-child(2) {
-            background-color: #fff;
-            flex: auto;
-
+            padding: 5px 5px;
         }
     </style>
 </head>
 
 <body>
-    <div class="outer">
-        <!-- <div class="inner">
-            inner
-        </div>
-        <div class="inner">
-            inner
-        </div>
-        <div class="inner">
-            inner
-        </div>
-        <div class="inner">
-            inner
-        </div>
-        <div class="inner">
-            inner
-        </div>
-        <div class="inner">
-            inner
-        </div> -->
-        <div class="inner">
-            inner1
-        </div>
-        <div class="inner">
-            inner2
-        </div>
+    <p>mouseover 事件:不论鼠标指针穿过被选元素或其子元素，都会触发 mouseover 事件。</p>
+    <p>mouseenter 事件:只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。</p>
+    <div class="over">
+        <h2>被触发的 Mouseover 事件次数：<span></span></h2>
     </div>
+    <div class="enter">
+        <h2>被触发的 Mouseenter 事件次数：<span></span></h2>
+    </div>
+    <script>
+        var arr = [1,2,3]
+        var object = {a:1,b:2,c:3}
+        console.log(document.querySelector('.over').clientWidth);
+        
+        for (const key in object) {
+            
+                const element = object[key];
+                console.log(key);
+                
+           
+        }
+
+        function deepClone (obj) {
+            let newObj = obj instanceof Object ? {} : [];
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    newObj[key] = obj[key] instanceof obj ? deepClone() : obj[key]
+                }
+            }
+            return newObj ;
+        }
+
+    </script>
 </body>
 
 </html>

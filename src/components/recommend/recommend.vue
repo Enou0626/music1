@@ -1,5 +1,12 @@
 <template>
   <div class="recommendContent">
+    <slider v-if="slider.length">
+      <div v-for="(item ,index) in slider" :key="index">
+        <a :href="item.linkUrl">
+          <img :src="item.picUrl" alt="">
+        </a>
+      </div>
+    </slider>
     <div class="recommend-list">
       <div class="list-title">recommend</div>
     </div>
@@ -10,48 +17,26 @@
 // import {RECOMMEND_BASE_URL} from 'common/js/static.js'
 // import {getDisclist} from 'api/recommend'
 import { getRecommend } from "api/recommend";
-// import { Indicator } from 'mint-ui';
+import Slider from "base/slider";
 // import originJsonp from 'jsonp'
 
 export default {
   data() {
     return {
-      // slider: [],
+      slider: []
       // discList: [],
       // sliderHeight: 200
     };
   },
+  components: {
+    Slider
+  },
   created() {
     getRecommend().then(res => {
+      this.slider = res.data.slider;
       console.log(res);
     });
   }
-  // methods: {
-  //   sliderHeightHandler() {
-  //     // var w = document.documentElement.offsetWidth || document.body.offsetWidth ;
-  //     var h = document.documentElement.offsetHeight || document.body.offsetHeight;
-  //     return h * 0.2
-  //   }
-  // },
-  // created () {
-  //   Indicator.open();
-  //   this.sliderHeight = this.sliderHeightHandler();
-  //   this.axios.get('/api/getRecommend').then((data, err) => {
-  //     if (!err) {
-  //       this.slider = data.data.data.slider
-  //       }
-  //   })
-  //   getDisclist().then((data, err) => {
-  //     if (!err) {
-  //       this.discList = data.data.list
-  //     }
-  //   })
-  // },
-  // watch: {
-  //   discList(newList, oldList) {
-  //     Indicator.close();
-  //   }
-  // }
 };
 </script>
 
