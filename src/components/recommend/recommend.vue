@@ -3,7 +3,7 @@
     <slider v-if="slider.length">
       <div v-for="(item ,index) in slider" :key="index">
         <a :href="item.linkUrl">
-          <img :src="item.picUrl" alt="">
+          <img :src="item.picUrl" alt>
         </a>
       </div>
     </slider>
@@ -15,16 +15,16 @@
 
 <script type="text/ecmascript-6">
 // import {RECOMMEND_BASE_URL} from 'common/js/static.js'
-// import {getDisclist} from 'api/recommend'
-import { getRecommend } from "api/recommend";
+import { getRecommend, getDisclist } from "api/recommend";
 import Slider from "base/slider";
+// import axios from "axios";
 // import originJsonp from 'jsonp'
 
 export default {
   data() {
     return {
-      slider: []
-      // discList: [],
+      slider: [],
+      discList: []
       // sliderHeight: 200
     };
   },
@@ -34,8 +34,19 @@ export default {
   created() {
     getRecommend().then(res => {
       this.slider = res.data.slider;
-      console.log(res);
+      // console.log(res);
     });
+    getDisclist().then(res => {
+      this.discList = res.data.list
+      console.log(this.discList);
+    });
+    // axios.get("/api/getRecommend").then((data, err) => {
+    //   console.log(data);
+
+    //   if (!err) {
+    //     this.slider = data.data.data.slider;
+    //   }
+    // });
   }
 };
 </script>
