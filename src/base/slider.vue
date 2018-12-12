@@ -72,6 +72,10 @@ export default {
         }
       });
 
+      this.scroll.on("beforeScrollStart", () => {
+        clearTimeout(this.timer);
+      });
+
       this.scroll.on("scrollEnd", () => {
         let pageIndex = this.scroll.getCurrentPage().pageX;
         this.currentIndex = pageIndex;
@@ -82,9 +86,9 @@ export default {
       // let toPage =
       //   this.currentIndex > this.children.length - 2 ? 1 : ++this.currentIndex;
       //   debugger
-      this.interver = setTimeout(() => {
+      this.timer = setTimeout(() => {
         let pageIndex = this.currentIndex + 1;
-        pageIndex = pageIndex >= 5 ? 0 : pageIndex;
+        pageIndex = pageIndex >= this.children.length - 2 ? 0 : pageIndex;
         // debugger
         this.scroll.goToPage(pageIndex, 0, 400);
       }, 1000);
