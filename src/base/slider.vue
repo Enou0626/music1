@@ -24,6 +24,7 @@ export default {
     this._initWidth(false);
     this._initSlider();
     this._initDots();
+    this._autoPlay();
 
     window.addEventListener("resize", () => {
       if (this.scroll) {
@@ -31,6 +32,14 @@ export default {
         this.scroll.refresh();
       }
     });
+  },
+  activated() {
+    console.log("ac");
+    this._autoPlay();
+  },
+  deactivated() {
+    console.log("de");
+    clearInterval(this.interver);
   },
   methods: {
     _initDots() {
@@ -65,11 +74,20 @@ export default {
 
       this.scroll.on("scrollEnd", () => {
         let pageIndex = this.scroll.getCurrentPage().pageX;
-        if (this.loop) {
-          pageIndex -= 1;
-        }
         this.currentIndex = pageIndex;
+        this._autoPlay();
       });
+    },
+    _autoPlay() {
+      // let toPage =
+      //   this.currentIndex > this.children.length - 2 ? 1 : ++this.currentIndex;
+      //   debugger
+      this.interver = setTimeout(() => {
+        let pageIndex = this.currentIndex + 1;
+        pageIndex = pageIndex >= 5 ? 0 : pageIndex;
+        // debugger
+        this.scroll.goToPage(pageIndex, 0, 400);
+      }, 1000);
     }
   }
 };
