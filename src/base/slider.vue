@@ -83,9 +83,6 @@ export default {
       });
     },
     _autoPlay() {
-      // let toPage =
-      //   this.currentIndex > this.children.length - 2 ? 1 : ++this.currentIndex;
-      //   debugger
       this.timer = setTimeout(() => {
         let pageIndex = this.currentIndex + 1;
         pageIndex = pageIndex >= this.children.length - 2 ? 0 : pageIndex;

@@ -8,7 +8,18 @@
       </div>
     </slider>
     <div class="recommend-list">
-      <div class="list-title">recommend</div>
+      <h1 class="list-title">热门歌单推荐</h1>
+      <ul>
+        <li v-for="(item, index) in discList" :key="index" class="item">
+          <div class="icon">
+            <img :src="item.imgurl" style="with:60px;height:60px" alt>
+          </div>
+          <div class="text">
+            <h2 v-text="item.creator.name" class="name"></h2>
+            <p v-text="item.dissname" class="desc"></p>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -37,7 +48,7 @@ export default {
       // console.log(res);
     });
     getDisclist().then(res => {
-      this.discList = res.data.list
+      this.discList = res.data.list;
       console.log(this.discList);
     });
     // axios.get("/api/getRecommend").then((data, err) => {
@@ -65,7 +76,7 @@ export default {
 
   .item {
     display: flex;
-    box-sizing: border-box;
+    // box-sizing: border-box;
     align-items: center;
     padding: 0 20px 20px 20px;
 
