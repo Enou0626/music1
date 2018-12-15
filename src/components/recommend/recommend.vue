@@ -1,26 +1,30 @@
 <template>
-  <div class="recommendContent">
-    <slider v-if="slider.length">
-      <div v-for="(item ,index) in slider" :key="index">
-        <a :href="item.linkUrl">
-          <img :src="item.picUrl" alt>
-        </a>
+  <div class="recommend">
+    <scroll :data="this.discList" class="recommendContent">
+      <div>
+        <slider v-if="slider.length">
+          <div v-for="(item ,index) in slider" :key="index">
+            <a :href="item.linkUrl">
+              <img :src="item.picUrl" alt>
+            </a>
+          </div>
+        </slider>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li v-for="(item, index) in discList" :key="index" class="item">
+              <div class="icon">
+                <img :src="item.imgurl" style="with:60px;height:60px" alt>
+              </div>
+              <div class="text">
+                <h2 v-text="item.creator.name" class="name"></h2>
+                <p v-text="item.dissname" class="desc"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-    </slider>
-    <div class="recommend-list">
-      <h1 class="list-title">热门歌单推荐</h1>
-      <ul>
-        <li v-for="(item, index) in discList" :key="index" class="item">
-          <div class="icon">
-            <img :src="item.imgurl" style="with:60px;height:60px" alt>
-          </div>
-          <div class="text">
-            <h2 v-text="item.creator.name" class="name"></h2>
-            <p v-text="item.dissname" class="desc"></p>
-          </div>
-        </li>
-      </ul>
-    </div>
+    </scroll>
   </div>
 </template>
 
@@ -28,6 +32,7 @@
 // import {RECOMMEND_BASE_URL} from 'common/js/static.js'
 import { getRecommend, getDisclist } from "api/recommend";
 import Slider from "base/slider";
+import Scroll from "base/scroll";
 // import axios from "axios";
 // import originJsonp from 'jsonp'
 
@@ -40,7 +45,8 @@ export default {
     };
   },
   components: {
-    Slider
+    Slider,
+    Scroll
   },
   created() {
     getRecommend().then(res => {
@@ -49,7 +55,7 @@ export default {
     });
     getDisclist().then(res => {
       this.discList = res.data.list;
-      console.log(this.discList);
+      // console.log(this.discList);
     });
     // axios.get("/api/getRecommend").then((data, err) => {
     //   console.log(data);
@@ -58,12 +64,27 @@ export default {
     //     this.slider = data.data.data.slider;
     //   }
     // });
+  },
+  mounted() {
+    console.log("ss");
   }
 };
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '~common/stylus/variable';
+
+.recommend {
+  position: fixed;
+  width: 100%;
+  top: 88px;
+  bottom: 0;
+}
+
+.recommendContent {
+  height: 100%;
+  overflow: hidden;
+}
 
 .recommend-list {
   .list-title {
