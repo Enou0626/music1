@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import Recommend from "components/recommend/recommend"
-// import Singer from "components/Singer/Singer"
+import Singer from "components/Singer/Singer"
 
 Vue.use(Router);
 
@@ -16,11 +16,10 @@ export default
     {
       path: '/recommend',
       component: Recommend
+    },
+    {
+      path: '/singer',
+      component: Singer
     }
-    // ,
-    // {
-    //   path: '/singer',
-    //   component: Singer
-    // }
     ]
   })

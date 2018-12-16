@@ -1,5 +1,5 @@
 <template>
-   
+  <div class="singer">singer</div>
 </template>
 <script>
 // import { getSingerList } from "api/singer";
@@ -11,13 +11,9 @@ export default {
       singers: []
     };
   },
-  created() {
-    getSingerList().then(data => {
-      console.log(data);
-    });
-  },
+  created() {},
   components: {
-    Scroll
+    // Scroll
   }
 };
 </script>
