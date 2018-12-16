@@ -66,6 +66,7 @@ export default {
     _initSlider() {
       setTimeout(() => {
         this.scroll = new BtScroll(".slider", {
+          // click: true,
           scrollX: true,
           momentum: false,
           snap: {

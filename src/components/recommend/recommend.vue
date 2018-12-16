@@ -4,7 +4,7 @@
       <div>
         <slider v-if="slider.length">
           <div v-for="(item ,index) in slider" :key="index">
-            <a :href="item.linkUrl">
+            <a :href="item.linkUrl" class="">
               <img :src="item.picUrl">
             </a>
           </div>
@@ -14,7 +14,7 @@
           <ul>
             <li v-for="(item, index) in discList" :key="index" class="item">
               <div class="icon">
-                <img @load="loadImage" :src="item.imgurl" style="with:60px;height:60px" alt>
+                <img @load="loadImage" v-lazy="item.imgurl" style="with:60px;height:60px">
               </div>
               <div class="text">
                 <h2 v-text="item.creator.name" class="name"></h2>
