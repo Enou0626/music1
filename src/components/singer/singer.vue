@@ -1,5 +1,6 @@
 <template>
   <div class="singer">singer</div>
+  
 </template>
 <script>
 // import { getSingerList } from "api/singer";
