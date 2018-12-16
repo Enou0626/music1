@@ -1,11 +1,11 @@
 <template>
   <div class="recommend">
-    <scroll :data="this.discList" class="recommendContent">
+    <scroll :data="this.discList" class="recommendContent" ref="scroll">
       <div>
         <slider v-if="slider.length">
           <div v-for="(item ,index) in slider" :key="index">
             <a :href="item.linkUrl">
-              <img :src="item.picUrl" alt>
+              <img :src="item.picUrl">
             </a>
           </div>
         </slider>
@@ -14,7 +14,7 @@
           <ul>
             <li v-for="(item, index) in discList" :key="index" class="item">
               <div class="icon">
-                <img :src="item.imgurl" style="with:60px;height:60px" alt>
+                <img @load="loadImage" :src="item.imgurl" style="with:60px;height:60px" alt>
               </div>
               <div class="text">
                 <h2 v-text="item.creator.name" class="name"></h2>
@@ -48,11 +48,21 @@ export default {
     Slider,
     Scroll
   },
+  methods: {
+    loadImage() {
+      if (!this.loadImageTag) {
+        this.$refs.scroll.refresh();
+        this.loadImageTag = true;
+      }
+    }
+  },
   created() {
-    getRecommend().then(res => {
-      this.slider = res.data.slider;
-      // console.log(res);
-    });
+    setTimeout(() => {
+      getRecommend().then(res => {
+        this.slider = res.data.slider;
+        // console.log(res);
+      });
+    }, 1000);
     getDisclist().then(res => {
       this.discList = res.data.list;
       // console.log(this.discList);
@@ -65,9 +75,7 @@ export default {
     //   }
     // });
   },
-  mounted() {
-    console.log("ss");
-  }
+  mounted() {}
 };
 </script>
 

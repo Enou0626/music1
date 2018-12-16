@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     _initDots() {
-      this.dots = new Array(this.children.length - 2);
+      this.dots = new Array(this.children.length);
     },
     _initWidth(isResize) {
       const slider = this.$refs.slider;
@@ -64,23 +64,25 @@ export default {
         (!isResize ? width + clientWidth * 2 : width) + "px";
     },
     _initSlider() {
-      this.scroll = new BtScroll(".slider", {
-        scrollX: true,
-        momentum: false,
-        snap: {
-          loop: true
-        }
-      });
+      setTimeout(() => {
+        this.scroll = new BtScroll(".slider", {
+          scrollX: true,
+          momentum: false,
+          snap: {
+            loop: true
+          }
+        });
 
-      this.scroll.on("beforeScrollStart", () => {
-        clearTimeout(this.timer);
-      });
+        this.scroll.on("beforeScrollStart", () => {
+          clearTimeout(this.timer);
+        });
 
-      this.scroll.on("scrollEnd", () => {
-        let pageIndex = this.scroll.getCurrentPage().pageX;
-        this.currentIndex = pageIndex;
-        this._autoPlay();
-      });
+        this.scroll.on("scrollEnd", () => {
+          let pageIndex = this.scroll.getCurrentPage().pageX;
+          this.currentIndex = pageIndex;
+          this._autoPlay();
+        });
+      }, 20);
     },
     _autoPlay() {
       this.timer = setTimeout(() => {
