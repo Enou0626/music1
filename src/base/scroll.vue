@@ -34,13 +34,13 @@ export default {
     },
     refresh() {
       setTimeout(() => {
-          this.scroll.refresh();
+        this.scroll.refresh();
       }, 20);
     }
   },
   watch: {
     data(val) {
-      this.scroll.refresh();
+      this.refresh();
     }
   }
 };
@@ -48,6 +48,6 @@ export default {
 
 <style lang="stylus" scoped>
 .container {
-    height 100%
+  height: 100%;
 }
 </style>
