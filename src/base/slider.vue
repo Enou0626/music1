@@ -39,7 +39,7 @@ export default {
   },
   deactivated() {
     console.log("de");
-    clearInterval(this.interver);
+    clearInterval(this.timer);
   },
   methods: {
     _initDots() {
