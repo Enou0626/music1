@@ -29,8 +29,7 @@ export default {
   methods: {
     _initScroll() {
       this.scroll = new Btscroll(".container", {
-        probeType: this.probeType,
-        scrollY: true
+        probeType: this.probeType
       });
     },
     refresh() {
