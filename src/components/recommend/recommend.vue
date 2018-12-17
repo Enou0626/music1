@@ -4,7 +4,7 @@
       <div>
         <slider v-if="slider.length">
           <div v-for="(item ,index) in slider" :key="index">
-            <a :href="item.linkUrl" class="">
+            <a :href="item.linkUrl" class>
               <img :src="item.picUrl">
             </a>
           </div>
@@ -24,6 +24,9 @@
           </ul>
         </div>
       </div>
+      <div class="loadingBox" v-show="!discList.length">
+        <loading></loading>
+      </div>
     </scroll>
   </div>
 </template>
@@ -33,6 +36,7 @@
 import { getRecommend, getDisclist } from "api/recommend";
 import Slider from "base/slider";
 import Scroll from "base/scroll";
+import Loading from "base/Loading/Loading";
 // import axios from "axios";
 // import originJsonp from 'jsonp'
 
@@ -46,7 +50,8 @@ export default {
   },
   components: {
     Slider,
-    Scroll
+    Scroll,
+    Loading
   },
   methods: {
     loadImage() {
@@ -62,11 +67,13 @@ export default {
         this.slider = res.data.slider;
         // console.log(res);
       });
+
+      getDisclist().then(res => {
+        this.discList = res.data.list;
+        // console.log(this.discList);
+      });
     }, 1000);
-    getDisclist().then(res => {
-      this.discList = res.data.list;
-      // console.log(this.discList);
-    });
+
     // axios.get("/api/getRecommend").then((data, err) => {
     //   console.log(data);
 
@@ -87,6 +94,13 @@ export default {
   width: 100%;
   top: 88px;
   bottom: 0;
+
+  .loadingBox {
+    position: absolute;
+    width 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .recommendContent {
