@@ -31,51 +31,47 @@ export default {
       const HOT_NAME = "热门";
       let map = {
         hot: {
-          [HOT_NAME]: []
-        },
-        items: []
+          title: HOT_NAME,
+          items: []
+        }
       };
       dataArr.forEach((item, index) => {
         if (index < HOT_LENGTH) {
-          map.hot[HOT_NAME].push(
+          map.hot.items.push(
             new Singer({
               id: item.Fsinger_id,
               name: item.Fsinger_name
             })
           );
         }
-
         let key = item.Findex;
-        if (key.match(/[a-zA-Z]/)) {
-          if (!map.items[key]) {
-            map.items[key] = [
-              new Singer({
-                id: item.Fsinger_id,
-                name: item.Fsinger_name
-              })
-            ];
-          } else {
-            map.items[key].push(
-              new Singer({
-                id: item.Fsinger_id,
-                name: item.Fsinger_name
-              })
-            );
-          }
+        if (!map[key]) {
+          map[key] = { title: key, items: [] };
         }
+        map[key].items.push(
+          new Singer({
+            id: item.Fsinger_id,
+            name: item.Fsinger_name
+          })
+        );
       });
-      let sortItems = [];
+      let hot = [];
+      let ret = [];
 
-      Object.keys(map.items)
-        .sort((a, b) => {
-          return a.charCodeAt(0) - b.charCodeAt(0);
+      for (const key in map) {
+        const item = map[key];
+        if (item.title === HOT_NAME) {
+          hot.push(item);
+        } else if (item.title.match(/[a-zA-z]/)) {
+          ret.push(item);
+        }
+      }
+
+      return hot.concat(
+        ret.sort((a, b) => {
+          return a.title.charCodeAt(0) - b.title.charCodeAt(0);
         })
-        .forEach(keyName => {
-          sortItems.push({ [keyName]: map.items[keyName] });
-        });
-
-       sortItems.unshift(map.hot);
-       return sortItems;
+      );
     }
   },
   components: {
