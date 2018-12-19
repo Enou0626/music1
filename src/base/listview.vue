@@ -11,6 +11,13 @@
         </ul>
       </li>
     </ul>
+    <div class="list-shortcut">
+        <ul>
+            <li class="item" v-for="(item, index) in shortCutTag" :key="index">
+                {{item}}
+            </li>
+        </ul>
+    </div>
   </scroll>
 </template>
 
@@ -29,6 +36,13 @@ export default {
       }
       //   default: []
     }
+  },
+  computed: {
+      shortCutTag: function () {
+         return this.data.map((item) => {
+             return item.title.substr(0, 1)
+         })
+      }
   },
   components: {
     Scroll
