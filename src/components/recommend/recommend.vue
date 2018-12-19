@@ -91,6 +91,13 @@ export default {
   width: 100%;
   top: 88px;
   bottom: 0;
+
+  .loadingBox {
+    position: absolute;
+    width 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .recommendContent {

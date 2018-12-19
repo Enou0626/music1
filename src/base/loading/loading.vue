@@ -29,7 +29,8 @@ export default {
   transform: translateY(-50%);
   width: 100%;
   text-align: center;
-  z-index 100
+  z-index: 100;
+
   .desc {
     line-height: 20px;
     font-size: $font-size-small;
