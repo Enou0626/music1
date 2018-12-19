@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-box">
+  <div class="scroll-box" ref="wrapper">
     <slot></slot>
   </div>
 </template>
@@ -28,20 +28,27 @@ export default {
   },
   methods: {
     _initScroll() {
-      this.scroll = new Btscroll(".scroll-box", {
-        probeType: this.probeType,
-        click: true
-      });
+      // console.log(this.$refs.wrapper);
+
+      if (this.$refs.wrapper) {
+        this.scroll = new Btscroll(".scroll-box", {
+          probeType: this.probeType,
+          click: true
+        });
+      }
     },
     refresh() {
-      setTimeout(() => {
-        this.scroll.refresh();
-      }, 20);
+      this.scroll && this.scroll.refresh();
+    },
+    scrollToElement(el, delay) {
+      this.scroll && this.scroll.scrollToElement(el, delay);
     }
   },
   watch: {
     data(val) {
-      this.refresh();
+      setTimeout(() => {
+        this.refresh();
+      }, 20);
     }
   }
 };

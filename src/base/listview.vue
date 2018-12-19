@@ -1,7 +1,7 @@
 <template>
-  <scroll class="listview" :data="data">
+  <scroll class="listview" :data="data" ref="scroll">
     <ul>
-      <li v-for="(listGroup, index) in data" :key="index" class="list-group">
+      <li v-for="(listGroup, index) in data" :key="index" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{listGroup.title}}</h2>
         <ul>
           <li class="list-group-item" v-for="(item, index) in listGroup.items" :key="index">
@@ -11,12 +11,10 @@
         </ul>
       </li>
     </ul>
-    <div class="list-shortcut">
-        <ul>
-            <li class="item" v-for="(item, index) in shortCutTag" :key="index">
-                {{item}}
-            </li>
-        </ul>
+    <div class="list-shortcut" @touchstart="onShortCutTagTouch" @touchmove="onShortCutTagTouchMove">
+      <ul>
+        <li class="item" v-for="(item, index) in shortCutTag" :index="index" :key="index">{{item}}</li>
+      </ul>
     </div>
   </scroll>
 </template>
@@ -38,14 +36,33 @@ export default {
     }
   },
   computed: {
-      shortCutTag: function () {
-         return this.data.map((item) => {
-             return item.title.substr(0, 1)
-         })
-      }
+    shortCutTag: function() {
+      return this.data.map(item => {
+        return item.title.substr(0, 1);
+      });
+    }
   },
   components: {
     Scroll
+  },
+  methods: {
+    scrollTo(targetIndex) {
+      this.$refs.scroll.scrollToElement(
+        this.$refs.listGroup[parseInt(targetIndex)],
+        500
+      );
+    },
+    onShortCutTagTouch(e) {
+      this.targetIndex = e.target.getAttribute("index");
+      this.Y1 = e.touches[0].pageY;
+      this.scrollTo(this.targetIndex);
+    },
+    onShortCutTagTouchMove(e) {
+      this.Y2 = e.touches[0].pageY;
+      let delta = ((this.Y2 - this.Y1) / 18) | 0;
+      let currentIndex = parseInt(this.targetIndex) + delta;
+      this.scrollTo(currentIndex);
+    }
   }
 };
 </script>
