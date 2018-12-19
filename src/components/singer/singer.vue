@@ -1,12 +1,14 @@
 <template>
-  <div class="singer">singerr</div>
+  <div class="singer">
+    <loading :data="singers"></loading>
+    <list-view :data="singers"></list-view>
+  </div>
 </template>
 <script>
 import { getSingerList } from "api/singer";
 import { ERR_OK } from "api/config";
 import Singer from "common/js/singer";
-// import Scroll from "../../base/scroll/scroll";
-
+import ListView from "base/listview";
 export default {
   data() {
     return {
@@ -18,13 +20,15 @@ export default {
   },
   methods: {
     _getSingerList() {
-      getSingerList().then(res => {
-        if (res.code === ERR_OK) {
-          this.singers = res.data.list;
-          console.log(this.singers);
-          console.log(this._normalizeSingerList(this.singers));
-        }
-      });
+      setTimeout(() => {
+        getSingerList().then(res => {
+          if (res.code === ERR_OK) {
+            this.singers = this._normalizeSingerList(res.data.list);
+            // console.log(res.data.list);
+            // console.log(this.singers);
+          }
+        });
+      }, 1000);
     },
     _normalizeSingerList(dataArr) {
       const HOT_LENGTH = 10;
@@ -39,7 +43,7 @@ export default {
         if (index < HOT_LENGTH) {
           map.hot.items.push(
             new Singer({
-              id: item.Fsinger_id,
+              id: item.Fsinger_mid,
               name: item.Fsinger_name
             })
           );
@@ -50,7 +54,7 @@ export default {
         }
         map[key].items.push(
           new Singer({
-            id: item.Fsinger_id,
+            id: item.Fsinger_mid,
             name: item.Fsinger_name
           })
         );
@@ -75,9 +79,15 @@ export default {
     }
   },
   components: {
-    // Scroll
+    ListView
   }
 };
 </script>
 <style lang="stylus" scoped>
+.singer {
+  position: fixed;
+  top: 88px;
+  bottom: 0;
+  width: 100%;
+}
 </style>

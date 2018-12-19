@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="scroll-box">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 import Btscroll from "better-scroll";
 export default {
-  name: "container",
+  name: "scroll-box",
   data() {
     return {};
   },
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     _initScroll() {
-      this.scroll = new Btscroll(".container", {
+      this.scroll = new Btscroll(".scroll-box", {
         probeType: this.probeType,
         click: true
       });
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.container {
+.scroll-box {
   height: 100%;
 }
 </style>

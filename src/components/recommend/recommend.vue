@@ -24,9 +24,7 @@
           </ul>
         </div>
       </div>
-      <div class="loadingBox" v-show="!discList.length">
-        <loading></loading>
-      </div>
+        <loading :data="discList"></loading>
     </scroll>
   </div>
 </template>
@@ -36,7 +34,7 @@
 import { getRecommend, getDisclist } from "api/recommend";
 import Slider from "base/slider";
 import Scroll from "base/scroll";
-import Loading from "base/Loading/Loading";
+// import Loading from "base/Loading/Loading";
 // import axios from "axios";
 // import originJsonp from 'jsonp'
 
@@ -50,8 +48,7 @@ export default {
   },
   components: {
     Slider,
-    Scroll,
-    Loading
+    Scroll
   },
   methods: {
     loadImage() {
@@ -94,13 +91,6 @@ export default {
   width: 100%;
   top: 88px;
   bottom: 0;
-
-  .loadingBox {
-    position: absolute;
-    width 100%;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 }
 
 .recommendContent {
