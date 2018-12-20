@@ -18,7 +18,11 @@
         </ul>
       </li>
     </ul>
-    <div class="list-shortcut" @touchstart="onShortCutTagTouch" @touchmove="onShortCutTagTouchMove">
+    <div
+      class="list-shortcut"
+      @touchstart="onShortCutTagTouch"
+      @touchmove.stop.prevent="onShortCutTagTouchMove"
+    >
       <ul>
         <li
           :class="{'item':true, 'current': index === currentIndex}"
@@ -46,7 +50,6 @@ export default {
       default: () => {
         return [];
       }
-      //   default: []
     }
   },
   components: {
@@ -84,6 +87,11 @@ export default {
       this.Y2 = e.touches[0].pageY;
       let delta = ((this.Y2 - this.Y1) / 18) | 0;
       let currentIndex = parseInt(this.targetIndex) + delta;
+      if (currentIndex < 0) {
+        currentIndex = 0;
+      } else if (currentIndex > this.data.length) {
+        currentIndex = this.data.length;
+      }
       this.currentIndex = currentIndex;
       this.scrollTo(currentIndex);
     },
