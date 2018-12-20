@@ -32,6 +32,9 @@
         >{{item}}</li>
       </ul>
     </div>
+    <div class="list-fixed" ref="fixed" v-show="fixedTitle">
+      <div class="fixed-title">{{fixedTitle}}</div>
+    </div>
   </scroll>
 </template>
 
@@ -41,7 +44,9 @@ export default {
   name: "listview",
   data() {
     return {
-      currentIndex: 0
+      currentIndex: 0,
+      listGroupHeightArr: [],
+      scrollY: 0
     };
   },
   props: {
@@ -61,6 +66,14 @@ export default {
       return this.data.map(item => {
         return item.title.substr(0, 1);
       });
+    },
+    fixedTitle: function() {
+      if (this.scrollY > 0) {
+        return "";
+      }
+      return this.data[this.currentIndex]
+        ? this.data[this.currentIndex].title
+        : "";
     }
   },
   watch: {
@@ -89,8 +102,8 @@ export default {
       let currentIndex = parseInt(this.targetIndex) + delta;
       if (currentIndex < 0) {
         currentIndex = 0;
-      } else if (currentIndex > this.data.length) {
-        currentIndex = this.data.length;
+      } else if (currentIndex > this.data.length - 1) {
+        currentIndex = this.data.length - 1;
       }
       this.currentIndex = currentIndex;
       this.scrollTo(currentIndex);
@@ -113,6 +126,7 @@ export default {
       this.listGroupHeightArr = arr;
     },
     listenScroll(pos) {
+      this.scrollY = pos.y;
       const y = -pos.y;
       if (y <= 0) {
         this.currentIndex = 0;
@@ -172,7 +186,7 @@ export default {
 
   .list-shortcut {
     position: absolute;
-    z-index: 30;
+    z-index: 100;
     right: 0;
     top: 50%;
     transform: translateY(-50%);

@@ -16,7 +16,8 @@ export default {
   data() {
     return {
       dots: [],
-      currentIndex: 0
+      currentIndex: 0,
+      children: []
     };
   },
   created() {},
