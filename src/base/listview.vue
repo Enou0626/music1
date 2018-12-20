@@ -46,7 +46,8 @@ export default {
     return {
       currentIndex: 0,
       listGroupHeightArr: [],
-      scrollY: 0
+      scrollY: 0,
+      differ: 0
     };
   },
   props: {
@@ -81,6 +82,15 @@ export default {
       setTimeout(() => {
         this._measureListGroup();
       }, 20);
+    },
+    differ: function(newVal) {
+      // let currentIndex = this.currentIndex;
+      let translate = newVal < 30 && newVal > 0 ? newVal - 30 : 0;
+      if (translate === this.translate) {
+        return;
+      }
+      this.$refs.fixed.style.transform = `translate3D(0, ${translate}px, 0)`;
+      this.translate = translate;
     }
   },
   methods: {
@@ -136,6 +146,7 @@ export default {
         const h2 = this.listGroupHeightArr[index + 1];
         if (y > h1 && y < h2) {
           this.currentIndex = index;
+          this.differ = h2 - y;
         }
       }
     }
