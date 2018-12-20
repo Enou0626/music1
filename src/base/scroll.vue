@@ -19,11 +19,18 @@ export default {
     probeType: {
       type: Number,
       default: 1
+    },
+    isListenScroll: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
     setTimeout(() => {
       this._initScroll();
+      if (this.isListenScroll) {
+        this._listenScroll();
+      }
     }, 20);
   },
   methods: {
@@ -36,6 +43,14 @@ export default {
           click: true
         });
       }
+    },
+    _listenScroll() {
+      const that = this;
+      this.scroll &&
+        this.scroll.on("scroll", pos => {
+          // console.log(pos);
+          that.$emit('listenScroll', pos)
+        });
     },
     refresh() {
       this.scroll && this.scroll.refresh();

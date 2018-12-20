@@ -1,5 +1,12 @@
 <template>
-  <scroll class="listview" :data="data" ref="scroll">
+  <scroll
+    class="listview"
+    :data="data"
+    ref="scroll"
+    :isListenScroll="true"
+    :probeType="3"
+    @listenScroll="listenScroll"
+  >
     <ul>
       <li v-for="(listGroup, index) in data" :key="index" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{listGroup.title}}</h2>
@@ -13,7 +20,12 @@
     </ul>
     <div class="list-shortcut" @touchstart="onShortCutTagTouch" @touchmove="onShortCutTagTouchMove">
       <ul>
-        <li class="item" v-for="(item, index) in shortCutTag" :index="index" :key="index">{{item}}</li>
+        <li
+          :class="{'item':true, 'current': index === currentIndex}"
+          v-for="(item, index) in shortCutTag"
+          :index="index"
+          :key="index"
+        >{{item}}</li>
       </ul>
     </div>
   </scroll>
@@ -24,7 +36,9 @@ import Scroll from "base/scroll";
 export default {
   name: "listview",
   data() {
-    return {};
+    return {
+      currentIndex: 0
+    };
   },
   props: {
     data: {
@@ -35,6 +49,10 @@ export default {
       //   default: []
     }
   },
+  components: {
+    Scroll
+  },
+  mounted() {},
   computed: {
     shortCutTag: function() {
       return this.data.map(item => {
@@ -42,8 +60,12 @@ export default {
       });
     }
   },
-  components: {
-    Scroll
+  watch: {
+    data: function() {
+      setTimeout(() => {
+        this._measureListGroup();
+      }, 20);
+    }
   },
   methods: {
     scrollTo(targetIndex) {
@@ -53,7 +75,8 @@ export default {
       );
     },
     onShortCutTagTouch(e) {
-      this.targetIndex = e.target.getAttribute("index");
+      this.targetIndex = e.target.getAttribute("index") - 0;
+      this.currentIndex = this.targetIndex;
       this.Y1 = e.touches[0].pageY;
       this.scrollTo(this.targetIndex);
     },
@@ -61,7 +84,38 @@ export default {
       this.Y2 = e.touches[0].pageY;
       let delta = ((this.Y2 - this.Y1) / 18) | 0;
       let currentIndex = parseInt(this.targetIndex) + delta;
+      this.currentIndex = currentIndex;
       this.scrollTo(currentIndex);
+    },
+    _measureListGroup(vue) {
+      let listGroupHeightArr =
+        this.$refs.listGroup &&
+        this.$refs.listGroup.map(element => {
+          return element.clientHeight;
+        });
+
+      let arr = [0];
+      let height = 0;
+      listGroupHeightArr.forEach(element => {
+        height += element;
+        // console.log(element);
+        arr.push(height);
+      });
+
+      this.listGroupHeightArr = arr;
+    },
+    listenScroll(pos) {
+      const y = -pos.y;
+      if (y <= 0) {
+        this.currentIndex = 0;
+      }
+      for (let index = 0; index < this.listGroupHeightArr.length; index++) {
+        const h1 = this.listGroupHeightArr[index];
+        const h2 = this.listGroupHeightArr[index + 1];
+        if (y > h1 && y < h2) {
+          this.currentIndex = index;
+        }
+      }
     }
   }
 };

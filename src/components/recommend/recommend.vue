@@ -24,7 +24,7 @@
           </ul>
         </div>
       </div>
-        <loading :data="discList"></loading>
+      <loading :data="discList"></loading>
     </scroll>
   </div>
 </template>
@@ -94,7 +94,7 @@ export default {
 
   .loadingBox {
     position: absolute;
-    width 100%;
+    width: 100%;
     top: 50%;
     transform: translateY(-50%);
   }
