@@ -11,7 +11,12 @@
       <li v-for="(listGroup, index) in data" :key="index" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{listGroup.title}}</h2>
         <ul>
-          <li class="list-group-item" v-for="(item, index) in listGroup.items" :key="index">
+          <li
+            class="list-group-item"
+            v-for="(item, index) in listGroup.items"
+            :key="index"
+            @click="itemClick(item)"
+          >
             <img v-lazy="item.avatar" class="avatar">
             <span class="name">{{item.name}}</span>
           </li>
@@ -149,6 +154,9 @@ export default {
           this.differ = h2 - y;
         }
       }
+    },
+    itemClick(item) {
+      this.$emit('itemClick', item)
     }
   }
 };

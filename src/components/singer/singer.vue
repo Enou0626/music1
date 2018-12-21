@@ -1,7 +1,7 @@
 <template>
   <div class="singer">
     <loading :data="singers"></loading>
-    <list-view :data="singers"></list-view>
+    <list-view @itemClick="itemClick" :data="singers"></list-view>
   </div>
 </template>
 <script>
@@ -76,6 +76,9 @@ export default {
           return a.title.charCodeAt(0) - b.title.charCodeAt(0);
         })
       );
+    },
+    itemClick(item) {
+      this.$router.push(`singer/${item.id}`);
     }
   },
   components: {
