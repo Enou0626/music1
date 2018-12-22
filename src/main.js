@@ -7,6 +7,7 @@ import 'common/stylus/index.styl'
 import FastClick from 'fastclick'
 import LazyLoad from 'vue-lazyload'
 import Loading from './base/loading/loading'
+import store from 'store'
 
 Vue.config.productionTip = false
 FastClick.attach(document.body)
@@ -21,6 +22,7 @@ Vue.component('loading', Loading)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -9,6 +9,8 @@ import { getSingerList } from "api/singer";
 import { ERR_OK } from "api/config";
 import Singer from "common/js/singer";
 import ListView from "base/listview";
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -19,6 +21,7 @@ export default {
     this._getSingerList();
   },
   methods: {
+    ...mapMutations(["setSinger"]),
     _getSingerList() {
       setTimeout(() => {
         getSingerList().then(res => {
@@ -79,7 +82,12 @@ export default {
     },
     itemClick(item) {
       this.$router.push(`singer/${item.id}`);
+      this.setSinger("singer");
+      console.log(this.singer);
     }
+  },
+  computed: {
+    ...mapState(["singer"])
   },
   components: {
     ListView
