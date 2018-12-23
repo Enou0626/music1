@@ -3,7 +3,7 @@ import Router from "vue-router";
 
 import Recommend from "components/recommend/recommend"
 import Singer from "components/Singer/Singer"
-import SingerDetail from "components/Singer-detail/Singer-detail"
+import SingerDetail from "components/singer-detail/singer-detail"
 
 Vue.use(Router);
 

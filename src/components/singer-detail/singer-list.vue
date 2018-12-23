@@ -1,7 +1,8 @@
 <template>
   <div class="singer">
-    <loading :data="singers"></loading>
+    <!-- <loading :data="singers"></loading> -->
     <router-view></router-view>
+
     <list-view @itemClick="itemClick" :data="singers"></list-view>
   </div>
 </template>
@@ -96,10 +97,4 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.singer {
-  position: fixed;
-  top: 88px;
-  bottom: 0;
-  width: 100%;
-}
 </style>
