@@ -1,8 +1,6 @@
 <template>
   <div class="singer">
-    <!-- <loading :data="singers"></loading> -->
-    <router-view></router-view>
-
+    <loading :data="singers"></loading>
     <list-view @itemClick="itemClick" :data="singers"></list-view>
   </div>
 </template>
@@ -84,7 +82,7 @@ export default {
     },
     itemClick(item) {
       this.setSinger(item);
-      this.$router.push(`singer/${item.id}`);
+      this.$router.push(`/singer/${item.id}`);
       // console.log(this.singer);
     }
   },
