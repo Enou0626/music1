@@ -15,7 +15,7 @@
             class="list-group-item"
             v-for="(item, index) in listGroup.items"
             :key="index"
-            @click="itemClick(item)"
+            @click.stop="itemClick(item)"
           >
             <img v-lazy="item.avatar" class="avatar">
             <span class="name">{{item.name}}</span>
@@ -156,7 +156,7 @@ export default {
       }
     },
     itemClick(item) {
-      this.$emit('itemClick', item)
+      this.$emit("itemClick", item);
     }
   }
 };

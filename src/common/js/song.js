@@ -1,9 +1,5 @@
-import {getLyric} from 'api/song'
-import {ERR_OK} from 'api/config'
-import {Base64} from 'js-base64'
-
-export default class Song {
-  constructor({id, mid, singer, name, album, duration, image, url}) {
+class Song {
+  constructor({ id, mid, singer, name, album, duration, image, url }) {
     this.id = id
     this.mid = mid
     this.singer = singer
@@ -13,26 +9,8 @@ export default class Song {
     this.image = image
     this.url = url
   }
-
-  getLyric() {
-    if (this.lyric) {
-      return Promise.resolve(this.lyric)
-    }
-
-    return new Promise((resolve, reject) => {
-      getLyric(this.mid).then((res) => {
-        if (res.retcode === ERR_OK) {
-          this.lyric = Base64.decode(res.lyric)
-          resolve(this.lyric)
-        } else {
-          reject('no lyric')
-        }
-      })
-    })
-  }
 }
-
-export function createSong(musicData) {
+export function creatSong(musicData) {
   return new Song({
     id: musicData.songid,
     mid: musicData.songmid,
@@ -41,18 +19,16 @@ export function createSong(musicData) {
     album: musicData.albumname,
     duration: musicData.interval,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46`
-  })
+    url: songUrl
+    // url: `http://dl.stream.qqmusic.qq.com/${musicData.songmid}.m4a?fromtag=66`
+  });
 }
+const songUrl = "http://dl.stream.qqmusic.qq.com/C400001TXSYu1Gwuwv.m4a?guid=7673951776&vkey=ED87641D514EFB2293E7183FFC548F3078119A942605A0A58CC32B06623997C0C374354A91F69C44B7BC87529DD8BB32F372738CE6CD790F&uin=2506&fromtag=66"
 
-function filterSinger(singer) {
-  let ret = []
-  if (!singer) {
-    return ''
-  }
-  singer.forEach((s) => {
-    ret.push(s.name)
-  })
-  return ret.join('/')
+function filterSinger(singerArr) {
+  let retArr = singerArr.map(singer => {
+    return singer.name
+  }).join('/');
+
+  return retArr;
 }
-
