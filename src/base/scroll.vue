@@ -49,10 +49,12 @@ export default {
       this.scroll &&
         this.scroll.on("scroll", pos => {
           // console.log(pos);
-          that.$emit('listenScroll', pos)
+          that.$emit("listenScroll", pos);
         });
     },
     refresh() {
+      console.log("scroll refresh");
+
       this.scroll && this.scroll.refresh();
     },
     scrollToElement(el, delay) {

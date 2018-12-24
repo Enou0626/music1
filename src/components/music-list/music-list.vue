@@ -14,13 +14,31 @@
       <div class="filter" ref="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
-    <!-- <scroll></scroll> -->
+
+    <scroll
+      :probeType="3"
+      :isListenScroll="true"
+      @listenScroll="listenScroll"
+      class="list"
+      :data="songs"
+      ref="list"
+    >
+      <div class="song-list-wrapper">
+        <song-list :songs="songs"></song-list>
+      </div>
+    </scroll>
   </div>
 </template>
 
 <script>
+import SongList from "base/song-list/song-list";
+import Scroll from "base/scroll";
 export default {
   name: "",
+  components: {
+    SongList,
+    Scroll
+  },
   props: {
     bgImage: {
       type: String,
@@ -39,6 +57,13 @@ export default {
       default: false
     }
   },
+  mounted() {
+    this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`;
+    // this.$refs.list.refresh();
+  },
+  activated() {
+    // this.$refs.list.refresh();
+  },
   computed: {
     bgStyle: function() {
       return `backgroundImage:url(${this.bgImage})`;
@@ -47,10 +72,20 @@ export default {
   methods: {
     back() {
       this.$router.back();
+    },
+    listenScroll(pos) {
+      // console.log(pos.y + "/" + this.$refs.bgImage.clientHeight);
+      const y = pos.y;
+      let scrollY = Math.max(y, -300) + 30;
+      console.log(scrollY);
+
+      this.$refs.layer.style.transform = `translate3d(0, ${scrollY}px, 0)`;
     }
   },
   data() {
-    return {};
+    return {
+      scrollY: 0
+    };
   }
 };
 </script>
