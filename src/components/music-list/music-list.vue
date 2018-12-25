@@ -61,7 +61,8 @@ export default {
   mounted() {
     this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`;
     // this.$refs.list.refresh();
-    this.minTranslate = this.$refs.bgImage.clientHeight - RESERVED_HEIGHT;
+    this.bgImageHeight = this.$refs.bgImage.clientHeight;
+    this.minTranslate = this.bgImageHeight - RESERVED_HEIGHT;
   },
   activated() {
     // this.$refs.list.refresh();
@@ -80,13 +81,23 @@ export default {
       let zIndex = 0;
       let scrollY = Math.max(y, -this.minTranslate);
       this.$refs.layer.style.transform = `translate3d(0, ${scrollY}px, 0)`;
+      let precent = y / this.bgImageHeight;
+
+      if (y > 0) {
+        // pull down
+        zIndex = 10;
+        this.$refs.bgImage.style.transform = `scale(${1 + precent})`;
+      }
+
       if (-y > this.minTranslate) {
+        // arrive top
         this.$refs.bgImage.style.paddingTop = `0px`;
-        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`; // bind fix top
         zIndex = 10;
       } else {
         this.$refs.bgImage.style.paddingTop = `70%`;
         this.$refs.bgImage.style.height = `0px`;
+        this.$refs.bgImage.style.filter = `blur(${-precent * 10}px)`;
       }
       this.$refs.bgImage.style.zIndex = zIndex;
     }
