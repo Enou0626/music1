@@ -33,6 +33,7 @@
 <script>
 import SongList from "base/song-list/song-list";
 import Scroll from "base/scroll";
+const RESERVED_HEIGHT = 40;
 export default {
   name: "",
   components: {
@@ -60,6 +61,7 @@ export default {
   mounted() {
     this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`;
     // this.$refs.list.refresh();
+    this.minTranslate = this.$refs.bgImage.clientHeight - RESERVED_HEIGHT;
   },
   activated() {
     // this.$refs.list.refresh();
@@ -74,12 +76,19 @@ export default {
       this.$router.back();
     },
     listenScroll(pos) {
-      // console.log(pos.y + "/" + this.$refs.bgImage.clientHeight);
       const y = pos.y;
-      let scrollY = Math.max(y, -300) + 30;
-      console.log(scrollY);
-
+      let zIndex = 0;
+      let scrollY = Math.max(y, -this.minTranslate);
       this.$refs.layer.style.transform = `translate3d(0, ${scrollY}px, 0)`;
+      if (-y > this.minTranslate) {
+        this.$refs.bgImage.style.paddingTop = `0px`;
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`;
+        zIndex = 10;
+      } else {
+        this.$refs.bgImage.style.paddingTop = `70%`;
+        this.$refs.bgImage.style.height = `0px`;
+      }
+      this.$refs.bgImage.style.zIndex = zIndex;
     }
   },
   data() {
