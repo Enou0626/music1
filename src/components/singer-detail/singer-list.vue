@@ -20,6 +20,7 @@ export default {
   created() {
     this._getSingerList();
   },
+  activated() {},
   methods: {
     ...mapMutations(["setSinger"]),
     _getSingerList() {
