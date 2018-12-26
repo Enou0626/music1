@@ -1,7 +1,12 @@
 <template>
   <div class="song-list">
     <ul>
-      <li class="item" v-for="(song, index) in songs" :key="index">
+      <li
+        class="item"
+        v-for="(song, index) in songs"
+        :key="index"
+        @click.stop="selectSongHandler(index)"
+      >
         <div class="content">
           <h2 class="name">{{song.name}}</h2>
           <p class="desc">{{getDesc(song)}}</p>
@@ -12,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "song-list",
   data() {
@@ -24,8 +30,14 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["selectSong"]),
     getDesc(song) {
       return `${song.singer}·${song.album}`;
+    },
+    selectSongHandler(index) {
+      const songs = this.songs;
+      this.selectSong({ songs, index });
+      // console.log(this.selectSong);
     }
   }
 };
