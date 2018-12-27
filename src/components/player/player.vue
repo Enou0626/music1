@@ -1,6 +1,12 @@
 <template>
   <div class="player" v-show="playing">
-    <transition name="normal">
+    <transition
+      name="normal"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @leave="leave"
+      @after-leave="afterLeave"
+    >
       <div class="normal-player" v-show="fullScreen">
         <div class="background">
           <img width="100%" height="100%" :src="currentSong.image">
@@ -63,7 +69,7 @@
     <transition name="mini">
       <div class="mini-player" v-show="!fullScreen" @click="open">
         <div class="icon">
-          <!-- <img :class="cdCls" width="40" height="40" :src="currentSong.image"> -->
+          <img width="40" height="40" :src="currentSong.image">
         </div>
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
@@ -91,6 +97,9 @@ export default {
       playingLyric: ""
     };
   },
+  mounted() {
+    console.log(this._getPosAndScale());
+  },
   computed: {
     ...mapState(["playing", "fullScreen"]),
     ...mapGetters(["currentSong"])
@@ -108,7 +117,26 @@ export default {
     togglePlaying() {},
     next() {},
     toggleFavorite() {},
-    getFavoriteIcon() {}
+    getFavoriteIcon() {},
+    _getPosAndScale() {
+      const targetWidth = 40;
+      const paddingLeft = 40;
+      const paddingBottom = 30;
+      const paddingTop = 80;
+      const width = window.innerWidth * 0.8;
+      const scale = targetWidth / width;
+      const x = -(window.innerWidth / 2 - paddingLeft);
+      const y = window.innerHeight - paddingTop - width / 2 - paddingBottom;
+      return {
+        x,
+        y,
+        scale
+      };
+    },
+    enter() {},
+    afterEnter() {},
+    leave() {},
+    afterLeave() {}
   }
 };
 </script>
@@ -116,6 +144,32 @@ export default {
 <style lang="stylus" scoped>
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
+
+.cd-enter-active {
+  animation: cd-in 0.5s;
+}
+
+.cd-leave-active {
+  animation: cd-in 0.5s reverse;
+}
+
+.cd {
+  animation: cd-in 0.8s;
+}
+
+@keyframes cd-in {
+  0% {
+    transform: translate3d(-171.5 px, 415.8px, 0) scale(0.12);
+  }
+
+  50% {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
 
 .player {
   .normal-player {
