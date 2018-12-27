@@ -98,7 +98,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this._getPosAndScale());
+    // console.log(this._getPosAndScale());
   },
   computed: {
     ...mapState(["playing", "fullScreen"]),
@@ -162,7 +162,23 @@ export default {
     transform: translate3d(-171.5 px, 415.8px, 0) scale(0.12);
   }
 
-  50% {
+  10% {
+    transform: translate3d(-121.5 px, 315.8px, 0) scale(0.22);
+  }
+
+  20% {
+    transform: translate3d(-71.5 px, 215.8px, 0) scale(0.52);
+  }
+
+  30% {
+    transform: translate3d(-21.5 px, 115.8px, 0) scale(0.62);
+  }
+
+  40% {
+    transform: translate3d(-1.5 px, 15.8px, 0) scale(0.72);
+  }
+
+  60% {
     transform: translate3d(0, 0, 0) scale(1.1);
   }
 
