@@ -12,6 +12,52 @@
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singer"></h2>
         </div>
+        <div class="middle">
+          <div class="middle-l" ref="middleL">
+            <div class="cd-wrapper" ref="cdWrapper">
+              <div class="cd">
+                <img class="image" :src="currentSong.image">
+              </div>
+            </div>
+            <div class="playing-lyric-wrapper">
+              <div class="playing-lyric">{{playingLyric}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="dot-wrapper">
+            <!-- <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>-->
+          </div>
+          <div class="progress-wrapper">
+            <!-- <span class="time time-l">{{format(currentTime)}}</span>
+            <div class="progress-bar-wrapper">
+              <progress-bar :percent="percent" @percentChange="onProgressBarChange"></progress-bar>
+            </div>
+            <span class="time time-r">{{format(currentSong.duration)}}</span>-->
+          </div>
+          <div class="operators">
+            <div class="icon i-left" @click="changeMode">
+              <i></i>
+            </div>
+            <div class="icon i-left">
+              <i @click="prev" class="icon-prev"></i>
+            </div>
+            <div class="icon i-center">
+              <i @click="togglePlaying"></i>
+            </div>
+            <div class="icon i-right">
+              <i @click="next" class="icon-next"></i>
+            </div>
+            <div class="icon i-right">
+              <i
+                @click="toggleFavorite(currentSong)"
+                class="icon"
+                :class="getFavoriteIcon(currentSong)"
+              ></i>
+            </div>
+          </div>
+        </div>
       </div>
     </transition>
     <transition name="mini">
@@ -41,7 +87,9 @@ import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   name: "player",
   data() {
-    return {};
+    return {
+      playingLyric: ""
+    };
   },
   computed: {
     ...mapState(["playing", "fullScreen"]),
@@ -54,7 +102,13 @@ export default {
     },
     open() {
       this.setFullScreen(true);
-    }
+    },
+    changeMode() {},
+    prev() {},
+    togglePlaying() {},
+    next() {},
+    toggleFavorite() {},
+    getFavoriteIcon() {}
   }
 };
 </script>
