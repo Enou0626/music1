@@ -35,11 +35,9 @@ export default {
     });
   },
   activated() {
-    console.log("ac");
     this._autoPlay();
   },
   deactivated() {
-    console.log("de");
     clearInterval(this.timer);
   },
   methods: {

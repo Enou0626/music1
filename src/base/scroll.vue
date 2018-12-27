@@ -33,6 +33,10 @@ export default {
       }
     }, 20);
   },
+  activated() {
+    console.log("scroll activated");
+    this.refresh();
+  },
   methods: {
     _initScroll() {
       // console.log(this.$refs.wrapper);

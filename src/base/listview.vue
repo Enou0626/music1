@@ -134,7 +134,6 @@ export default {
       let height = 0;
       listGroupHeightArr.forEach(element => {
         height += element;
-        // console.log(element);
         arr.push(height);
       });
 
