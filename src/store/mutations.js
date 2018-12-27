@@ -4,7 +4,7 @@ export default {
         state.singer = payload
     },
     [types.SET_PLAYLIST](state, payload) {
-        state.playlist = payload
+        state.playList = payload
     },
     [types.SET_PLAYING_STATE](state, payload) {
         state.playing = payload
@@ -14,5 +14,8 @@ export default {
     },
     [types.SET_FULL_SCREEN](state, payload) {
         state.fullScreen = payload
+    },
+    [types.SET_CURRENT_INDEX](state, payload) {
+        state.currentIndex = payload
     }
 }

@@ -25,7 +25,7 @@
     </ul>
     <div
       class="list-shortcut"
-      @touchstart="onShortCutTagTouch"
+      @touchstart.stop="onShortCutTagTouch"
       @touchmove.stop.prevent="onShortCutTagTouchMove"
     >
       <ul>
@@ -205,7 +205,7 @@ export default {
 
   .list-shortcut {
     position: absolute;
-    z-index: 100;
+    z-index: 150;
     right: 0;
     top: 50%;
     transform: translateY(-50%);

@@ -28,8 +28,6 @@ export default {
         getSingerList().then(res => {
           if (res.code === ERR_OK) {
             this.singers = this._normalizeSingerList(res.data.list);
-            // console.log(res.data.list);
-            // console.log(this.singers);
           }
         });
       }, 1000);

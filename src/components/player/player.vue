@@ -1,21 +1,60 @@
 <template>
   <div class="player" v-show="playing">
-    <div class="normal-player" v-show="fullScreen">
-      <div class="background">playing...</div>
-    </div>
-    <div class="mini-player"></div>
+    <transition name="normal">
+      <div class="normal-player" v-show="fullScreen">
+        <div class="background">
+          <img width="100%" height="100%" :src="currentSong.image">
+        </div>
+        <div class="top">
+          <div class="back" @click="back">
+            <i class="icon-back"></i>
+          </div>
+          <h1 class="title" v-html="currentSong.name"></h1>
+          <h2 class="subtitle" v-html="currentSong.singer"></h2>
+        </div>
+      </div>
+    </transition>
+    <transition name="mini">
+      <div class="mini-player" v-show="!fullScreen" @click="open">
+        <div class="icon">
+          <!-- <img :class="cdCls" width="40" height="40" :src="currentSong.image"> -->
+        </div>
+        <div class="text">
+          <h2 class="name" v-html="currentSong.name"></h2>
+          <p class="desc" v-html="currentSong.singer"></p>
+        </div>
+        <div class="control">
+          <!-- <progress-circle>
+            <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
+          </progress-circle>-->
+        </div>
+        <div class="control" @click.stop>
+          <i class="icon-playlist"></i>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   name: "player",
   data() {
     return {};
   },
   computed: {
-    ...mapState(["playing", "fullScreen"])
+    ...mapState(["playing", "fullScreen"]),
+    ...mapGetters(["currentSong"])
+  },
+  methods: {
+    ...mapMutations(["setFullScreen"]),
+    back() {
+      this.setFullScreen(false);
+    },
+    open() {
+      this.setFullScreen(true);
+    }
   }
 };
 </script>

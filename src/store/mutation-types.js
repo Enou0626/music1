@@ -4,7 +4,7 @@ export const SET_PLAYING_STATE = 'setPlayingState'
 
 export const SET_FULL_SCREEN = 'setFullScreen'
 
-export const SET_PLAYLIST = 'setPlaylist'
+export const SET_PLAYLIST = 'setPlayList'
 
 export const SET_SEQUENCE_LIST = 'setSequenceList'
 
