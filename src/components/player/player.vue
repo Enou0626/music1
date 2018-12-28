@@ -1,5 +1,5 @@
 <template>
-  <div class="player" v-show="playing">
+  <div class="player" v-show="playList.length>0">
     <transition
       name="normal"
       @enter="enter"
@@ -22,7 +22,7 @@
           <div class="middle" v-show="fullScreen">
             <div class="middle-l" ref="middleL">
               <div class="cd-wrapper" ref="cdWrapper">
-                <div class="cd">
+                <div class="cd" :class="cdCls">
                   <img class="image" :src="currentSong.image">
                 </div>
               </div>
@@ -52,7 +52,7 @@
               <i @click="prev" class="icon-prev"></i>
             </div>
             <div class="icon i-center">
-              <i @click="togglePlaying"></i>
+              <i @click="togglePlaying" :class="playIcon"></i>
             </div>
             <div class="icon i-right">
               <i @click="next" class="icon-next"></i>
@@ -78,6 +78,8 @@
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
         <div class="control">
+          <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
+
           <!-- <progress-circle>
             <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
           </progress-circle>-->
@@ -87,10 +89,12 @@
         </div>
       </div>
     </transition>
+    <audio ref="audio" :src="currentSong.url"></audio>
   </div>
 </template>
 
 <script>
+import * as type from "store/mutation-types";
 import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   name: "player",
@@ -103,11 +107,40 @@ export default {
     // console.log(this._getPosAndScale());
   },
   computed: {
-    ...mapState(["playing", "fullScreen"]),
-    ...mapGetters(["currentSong"])
+    ...mapState(["playing", "fullScreen", "playList"]),
+    ...mapGetters(["currentSong"]),
+    cdCls() {
+      return this.playing ? "play" : "play pause";
+    },
+    playIcon() {
+      return this.playing ? "icon-pause" : "icon-play";
+    },
+    miniIcon() {
+      return this.playing ? "icon-pause-mini" : "icon-play-mini";
+    }
+  },
+  watch: {
+    currentSong(newData) {
+      const audio = this.$refs.audio;
+
+      this.$nextTick(() => {
+        audio.play();
+      });
+    },
+    playing(newData) {
+      const audio = this.$refs.audio;
+
+      if (newData) {
+        this.$nextTick(() => {
+          audio.play();
+        });
+      } else {
+        audio.pause();
+      }
+    }
   },
   methods: {
-    ...mapMutations(["setFullScreen"]),
+    ...mapMutations(["setFullScreen", type.SET_PLAYING_STATE]),
     back() {
       this.setFullScreen(false);
     },
@@ -116,7 +149,9 @@ export default {
     },
     changeMode() {},
     prev() {},
-    togglePlaying() {},
+    togglePlaying() {
+      this.setPlayingState(!this.playing);
+    },
     next() {},
     toggleFavorite() {},
     getFavoriteIcon() {},
@@ -536,8 +571,8 @@ export default {
       .icon-mini {
         font-size: 32px;
         position: absolute;
-        left: 0;
-        top: 0;
+        left: 250px;
+        top: 10px;
       }
     }
   }

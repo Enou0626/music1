@@ -1,5 +1,5 @@
 class Song {
-  constructor({ id, mid, singer, name, album, duration, image, url }) {
+  constructor({ id, mid, singer, name, album, duration, image, url, songmid }) {
     this.id = id
     this.mid = mid
     this.singer = singer
@@ -8,6 +8,7 @@ class Song {
     this.duration = duration
     this.image = image
     this.url = url
+    this.songmid = songmid
   }
 }
 export function creatSong(musicData) {
@@ -19,12 +20,12 @@ export function creatSong(musicData) {
     album: musicData.albumname,
     duration: musicData.interval,
     image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: songUrl
-    // url: `http://dl.stream.qqmusic.qq.com/${musicData.songmid}.m4a?fromtag=66`
+    // url: songUrl,
+    songmid: musicData.songmid,
+    url: `https://api.bzqll.com/music/tencent/url?key=579621905&id=${musicData.songmid}&br=320`
   });
 }
-const songUrl = "http://dl.stream.qqmusic.qq.com/C400001TXSYu1Gwuwv.m4a?guid=7673951776&vkey=ED87641D514EFB2293E7183FFC548F3078119A942605A0A58CC32B06623997C0C374354A91F69C44B7BC87529DD8BB32F372738CE6CD790F&uin=2506&fromtag=66"
-
+// const songUrl = 'http://dl.stream.qqmusic.qq.com/C400003OUlho2HcRHC.m4a?guid=7673951776&vkey=5036C0B9B0910422E9B46A3D1CD2CCA46A8E1FC063E6D590B6F61E43447526E20FC6E693928B52C222D6DCE4FD1BEF96C9D5F5470C77123B&uin=2506&fromtag=66'
 function filterSinger(singerArr) {
   let retArr = singerArr.map(singer => {
     return singer.name
