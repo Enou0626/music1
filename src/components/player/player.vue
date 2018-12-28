@@ -18,18 +18,20 @@
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="currentSong.singer"></h2>
         </div>
-        <div class="middle">
-          <div class="middle-l" ref="middleL">
-            <div class="cd-wrapper" ref="cdWrapper">
-              <div class="cd">
-                <img class="image" :src="currentSong.image">
+        <transition name="cd">
+          <div class="middle" v-show="fullScreen">
+            <div class="middle-l" ref="middleL">
+              <div class="cd-wrapper" ref="cdWrapper">
+                <div class="cd">
+                  <img class="image" :src="currentSong.image">
+                </div>
+              </div>
+              <div class="playing-lyric-wrapper">
+                <div class="playing-lyric">{{playingLyric}}</div>
               </div>
             </div>
-            <div class="playing-lyric-wrapper">
-              <div class="playing-lyric">{{playingLyric}}</div>
-            </div>
           </div>
-        </div>
+        </transition>
         <div class="bottom">
           <div class="dot-wrapper">
             <!-- <span class="dot" :class="{'active':currentShow==='cd'}"></span>
@@ -150,40 +152,52 @@ export default {
 }
 
 .cd-leave-active {
-  animation: cd-in 0.5s reverse;
-}
-
-.cd {
-  animation: cd-in 0.8s;
+  animation: cd-in 1s reverse;
 }
 
 @keyframes cd-in {
   0% {
-    transform: translate3d(-171.5 px, 415.8px, 0) scale(0.12);
+    transform: translate3d(-171.5 px, 415.8px, 0) scale(0.1);
   }
 
   10% {
-    transform: translate3d(-121.5 px, 315.8px, 0) scale(0.22);
+    transform: translate3d(-150.5 px, 355.8px, 0) scale(0.2);
   }
 
   20% {
-    transform: translate3d(-71.5 px, 215.8px, 0) scale(0.52);
+    transform: translate3d(-130.5 px, 305.8px, 0) scale(0.3);
   }
 
   30% {
-    transform: translate3d(-21.5 px, 115.8px, 0) scale(0.62);
+    transform: translate3d(-110.5 px, 255.8px, 0) scale(0.4);
   }
 
   40% {
-    transform: translate3d(-1.5 px, 15.8px, 0) scale(0.72);
+    transform: translate3d(-90 px, 200.8px, 0) scale(0.5);
+  }
+
+  50% {
+    transform: translate3d(-75 px, 150 px, 0) scale(0.6);
   }
 
   60% {
-    transform: translate3d(0, 0, 0) scale(1.1);
+    transform: translate3d(-30 px, 100 px, 0) scale(0.8);
+  }
+
+  70% {
+    transform: translate3d(-15 px, 50px, 0) scale(0.9);
+  }
+
+  80% {
+    transform: translate3d(-10 px, 30px, 0) scale(1);
+  }
+
+  90% {
+    transform: translate3d(0 px, 0px, 0) scale(1.1);
   }
 
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0px, 0, 0) scale(1);
   }
 }
 
@@ -430,7 +444,7 @@ export default {
     }
 
     &.normal-enter-active, &.normal-leave-active {
-      transition: all 0.4s;
+      transition: all 0.7s;
 
       .top, .bottom {
         transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
