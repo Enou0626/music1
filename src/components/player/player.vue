@@ -32,11 +32,11 @@
             <span class="dot" :class="{'active':currentShow==='lyric'}"></span>-->
           </div>
           <div class="progress-wrapper">
-            <!-- <span class="time time-l">{{format(currentTime)}}</span>
+            <span class="time time-l">{{format(currentTime)}}</span>
             <div class="progress-bar-wrapper">
-              <progress-bar :percent="percent" @percentChange="onProgressBarChange"></progress-bar>
+              <progress-bar :percent="percent" @changedPrecent="onChangePrecent"></progress-bar>
             </div>
-            <span class="time time-r">{{format(currentSong.duration)}}</span>-->
+            <span class="time time-r">{{format(currentSong.duration)}}</span>
           </div>
           <div class="operators">
             <div class="icon i-left" @click="changeMode">
@@ -83,19 +83,28 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url" @canplay="ready" @error="error"></audio>
+    <audio
+      ref="audio"
+      :src="currentSong.url"
+      @timeupdate="timeUpdate"
+      @canplay="ready"
+      @error="error"
+    ></audio>
   </div>
 </template>
 
 <script>
 // import * as type from "store/mutation-types";
 import { mapState, mapGetters, mapMutations } from "vuex";
+import ProgressBar from "base/progress-bar/progress-bar";
 export default {
   name: "player",
+  components: { ProgressBar },
   data() {
     return {
       playingLyric: "",
-      songReady: false
+      songReady: false,
+      currentTime: ""
     };
   },
   mounted() {
@@ -104,6 +113,9 @@ export default {
   computed: {
     ...mapState(["playing", "fullScreen", "playList", "currentIndex"]),
     ...mapGetters(["currentSong"]),
+    percent() {
+      return this.currentTime / this.currentSong.duration;
+    },
     cdCls() {
       return this.playing ? "play" : "play pause";
     },
@@ -131,6 +143,7 @@ export default {
       if (newData) {
         this.$nextTick(() => {
           audio.play();
+          audio.volume = 0.2;
         });
       } else {
         audio.pause();
@@ -139,6 +152,25 @@ export default {
   },
   methods: {
     ...mapMutations(["setFullScreen", "setPlayingState", "setCurrentIndex"]),
+    onChangePrecent(precent) {
+      this.$refs.audio.currentTime = this.currentSong.duration * precent;
+    },
+    format(time) {
+      let minute = (time / 60) | 0;
+      let second = this._pad(time % 60 | 0);
+      return `${minute}:${second}`;
+    },
+    _pad(num, n = 2) {
+      let strLength = num.toString().length;
+      while (strLength < n) {
+        num = "0" + num;
+        strLength++;
+      }
+      return num;
+    },
+    timeUpdate(e) {
+      this.currentTime = e.target.currentTime;
+    },
     back() {
       this.setFullScreen(false);
     },

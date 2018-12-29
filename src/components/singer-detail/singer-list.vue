@@ -24,13 +24,11 @@ export default {
   methods: {
     ...mapMutations(["setSinger"]),
     _getSingerList() {
-      setTimeout(() => {
-        getSingerList().then(res => {
-          if (res.code === ERR_OK) {
-            this.singers = this._normalizeSingerList(res.data.list);
-          }
-        });
-      }, 1000);
+      getSingerList().then(res => {
+        if (res.code === ERR_OK) {
+          this.singers = this._normalizeSingerList(res.data.list);
+        }
+      });
     },
     _normalizeSingerList(dataArr) {
       const HOT_LENGTH = 10;
