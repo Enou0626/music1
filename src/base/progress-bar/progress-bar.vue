@@ -1,5 +1,5 @@
 <template>
-  <div class="progress-bar" ref="progressBar" @click="progressClick">
+  <div class="progress-bar" ref="progressBar" @click.capture="progressClick">
     <div class="bar-inner">
       <div class="progress" ref="progress"></div>
       <div
@@ -41,8 +41,10 @@ export default {
       this.$refs.progress.style.width = progress + "px";
       $pBt.style.transform = `translate3d(${progress - 8}px, 0 , 0)`;
     },
-    progressClick() {
-      console.log("progressClick");
+    progressClick(e) {
+      const clickPrecent = e.offsetX / this.$refs.progressBar.clientWidth;
+      this._setBtnPosition(clickPrecent);
+      this.$emit("changedPrecent", clickPrecent);
     },
     progressTouchStart(e) {
       this.touchFirstX = e.touches[0].pageX;
@@ -65,6 +67,9 @@ export default {
     },
     progressTouchEnd() {
       this.touching = false;
+      if (!this.changedPrecent) {
+        return;
+      }
       this.$emit("changedPrecent", this.changedPrecent);
     }
   }
