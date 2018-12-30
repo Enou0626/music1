@@ -17,5 +17,8 @@ export default {
     },
     [types.SET_CURRENT_INDEX](state, payload) {
         state.currentIndex = payload
+    },
+    [types.SET_PLAY_MODE](state, payload) {
+        state.mode = payload
     }
 }

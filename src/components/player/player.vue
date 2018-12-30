@@ -45,7 +45,7 @@
           </div>
           <div class="operators">
             <div class="icon i-left" @click="changeMode">
-              <i></i>
+              <i :class="iconMode"></i>
             </div>
             <div class="icon i-left" :class="disableCls">
               <i @click="prev" class="icon-prev"></i>
@@ -101,6 +101,7 @@
 import { mapState, mapGetters, mapMutations } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
 import progressCircle from "base/progress-circle/progress-circle";
+import { playMode } from "common/js/config";
 export default {
   name: "player",
   components: { ProgressBar, progressCircle },
@@ -116,9 +117,15 @@ export default {
     // console.log(this._getPosAndScale());
   },
   computed: {
-    ...mapState(["playing", "fullScreen", "playList", "currentIndex"]),
+    ...mapState(["playing", "fullScreen", "playList", "currentIndex", "mode"]),
     ...mapGetters(["currentSong"]),
-
+    iconMode() {
+      return this.mode === playMode.sequence
+        ? "icon-sequence"
+        : this.mode === playMode.loop
+        ? "icon-loop"
+        : "icon-random";
+    },
     percent() {
       return this.currentTime / this.currentSong.duration;
     },
@@ -165,7 +172,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setFullScreen", "setPlayingState", "setCurrentIndex"]),
+    ...mapMutations([
+      "setFullScreen",
+      "setPlayingState",
+      "setCurrentIndex",
+      "setPlayMode"
+    ]),
     upVolumn() {
       this.volume += 1;
       this.$nextTick(() => {
@@ -203,7 +215,10 @@ export default {
     open() {
       this.setFullScreen(true);
     },
-    changeMode() {},
+    changeMode() {
+      let currentMode = (this.mode + 1) % 3;
+      this.setPlayMode(currentMode);
+    },
     prev() {
       let currentIndex =
         this.currentIndex === 0
