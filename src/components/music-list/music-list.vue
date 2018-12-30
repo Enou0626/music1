@@ -81,12 +81,12 @@ export default {
       let zIndex = 0;
       let scrollY = Math.max(y, -this.minTranslate);
       this.$refs.layer.style.transform = `translate3d(0, ${scrollY}px, 0)`;
-      let precent = y / this.bgImageHeight;
+      let percent = y / this.bgImageHeight;
 
       if (y > 0) {
         // pull down
         zIndex = 10;
-        this.$refs.bgImage.style.transform = `scale(${1 + precent})`;
+        this.$refs.bgImage.style.transform = `scale(${1 + percent})`;
       }
 
       if (-y > this.minTranslate) {
@@ -97,7 +97,7 @@ export default {
       } else {
         this.$refs.bgImage.style.paddingTop = `70%`;
         this.$refs.bgImage.style.height = `0px`;
-        this.$refs.bgImage.style.filter = `blur(${-precent * 10}px)`;
+        this.$refs.bgImage.style.filter = `blur(${-percent * 10}px)`;
       }
       this.$refs.bgImage.style.zIndex = zIndex;
     }

@@ -35,8 +35,8 @@ export default {
     }
   },
   methods: {
-    _setBtnPosition(precent) {
-      const progress = this.$refs.progressBar.clientWidth * precent;
+    _setBtnPosition(percent) {
+      const progress = this.$refs.progressBar.clientWidth * percent;
       const $pBt = this.$refs.progressBtn;
       this.$refs.progress.style.width = progress + "px";
       $pBt.style.transform = `translate3d(${progress - 8}px, 0 , 0)`;

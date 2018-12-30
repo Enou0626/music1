@@ -26,6 +26,11 @@
             </div>
           </div>
         </transition>
+        <div class="volumn">
+          <p>{{volume}}</p>
+          <span class="left" @click="upVolumn">+</span>
+          <span class="right" @click="downVolumn">-</span>
+        </div>
         <div class="bottom">
           <div class="dot-wrapper">
             <!-- <span class="dot" :class="{'active':currentShow==='cd'}"></span>
@@ -72,11 +77,9 @@
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
         <div class="control">
-          <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
-
-          <!-- <progress-circle>
+          <progress-circle :percent="percent">
             <i @click.stop="togglePlaying" class="icon-mini" :class="miniIcon"></i>
-          </progress-circle>-->
+          </progress-circle>
         </div>
         <div class="control" @click.stop>
           <i class="icon-playlist"></i>
@@ -97,14 +100,16 @@
 // import * as type from "store/mutation-types";
 import { mapState, mapGetters, mapMutations } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
+import progressCircle from "base/progress-circle/progress-circle";
 export default {
   name: "player",
-  components: { ProgressBar },
+  components: { ProgressBar, progressCircle },
   data() {
     return {
       playingLyric: "",
       songReady: false,
-      currentTime: ""
+      currentTime: "",
+      volume: 4
     };
   },
   mounted() {
@@ -113,6 +118,7 @@ export default {
   computed: {
     ...mapState(["playing", "fullScreen", "playList", "currentIndex"]),
     ...mapGetters(["currentSong"]),
+
     percent() {
       return this.currentTime / this.currentSong.duration;
     },
@@ -143,17 +149,37 @@ export default {
       if (newData) {
         this.$nextTick(() => {
           audio.play();
-          audio.volume = 0.2;
+          audio.volume = 0.4;
         });
       } else {
         audio.pause();
+      }
+    },
+    volume(newData, oldData) {
+      if (newData > 9) {
+        this.volume = 10;
+      }
+      if (newData < 1) {
+        this.volume = 0;
       }
     }
   },
   methods: {
     ...mapMutations(["setFullScreen", "setPlayingState", "setCurrentIndex"]),
-    onChangePrecent(precent) {
-      this.$refs.audio.currentTime = this.currentSong.duration * precent;
+    upVolumn() {
+      this.volume += 1;
+      this.$nextTick(() => {
+        this.$refs.audio.volume = this.volume / 10;
+      });
+    },
+    downVolumn() {
+      this.volume -= 1;
+      this.$nextTick(() => {
+        this.$refs.audio.volume = this.volume / 10;
+      });
+    },
+    onChangePrecent(percent) {
+      this.$refs.audio.currentTime = this.currentSong.duration * percent;
     },
     format(time) {
       let minute = (time / 60) | 0;
@@ -287,6 +313,17 @@ export default {
 
   100% {
     transform: translate3d(0px, 0, 0) scale(1);
+  }
+}
+
+.volumn {
+  text-align: center;
+  top: 60%;
+  position: relative;
+
+  span {
+    padding: 5px 10px;
+    border: 1px solid gray;
   }
 }
 
@@ -625,8 +662,8 @@ export default {
       .icon-mini {
         font-size: 32px;
         position: absolute;
-        left: 300px;
-        top: 15px;
+        left: 0;
+        top: 0;
       }
     }
   }
