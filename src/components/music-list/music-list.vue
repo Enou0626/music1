@@ -14,19 +14,20 @@
       <div class="filter" ref="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
-
-    <scroll
-      :probeType="3"
-      :isListenScroll="true"
-      @listenScroll="listenScroll"
-      class="list"
-      :data="songs"
-      ref="list"
-    >
-      <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
-      </div>
-    </scroll>
+    <div class="scroll-wrapper" ref="scrollWrapper">
+      <scroll
+        :probeType="3"
+        :isListenScroll="true"
+        @listenScroll="listenScroll"
+        class="list"
+        :data="songs"
+        ref="list"
+      >
+        <div class="song-list-wrapper">
+          <song-list :songs="songs"></song-list>
+        </div>
+      </scroll>
+    </div>
   </div>
 </template>
 
@@ -60,7 +61,7 @@ export default {
     }
   },
   mounted() {
-    this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`;
+    this.$refs.scrollWrapper.style.top = `${this.$refs.bgImage.clientHeight}px`;
     // this.$refs.list.refresh();
     this.bgImageHeight = this.$refs.bgImage.clientHeight;
     this.minTranslate = this.bgImageHeight - RESERVED_HEIGHT;
@@ -211,10 +212,14 @@ export default {
     background: $color-background;
   }
 
-  .list {
+  .scroll-wrapper {
     position: fixed;
+    width: 100%;
     top: 0;
     bottom: 0;
+  }
+
+  .list {
     width: 100%;
     background: $color-background;
 
