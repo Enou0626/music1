@@ -34,11 +34,11 @@ export default {
     _getSingerDetail(singerId) {
       if (singerId) {
         getSingerDetail(singerId).then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.code === 0) {
             let musicList = this._normalizeData(res.data.list);
             this.songs = musicList;
-            console.log(this.songs);
+            // console.log(this.songs);
           }
         });
       }

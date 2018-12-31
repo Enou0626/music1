@@ -92,6 +92,7 @@
       @timeupdate="timeUpdate"
       @canplay="ready"
       @error="error"
+      @ended="end"
     ></audio>
   </div>
 </template>
@@ -102,6 +103,7 @@ import { mapState, mapGetters, mapMutations } from "vuex";
 import ProgressBar from "base/progress-bar/progress-bar";
 import progressCircle from "base/progress-circle/progress-circle";
 import { playMode } from "common/js/config";
+import { shuffle } from "common/js/util";
 export default {
   name: "player",
   components: { ProgressBar, progressCircle },
@@ -117,7 +119,14 @@ export default {
     // console.log(this._getPosAndScale());
   },
   computed: {
-    ...mapState(["playing", "fullScreen", "playList", "currentIndex", "mode"]),
+    ...mapState([
+      "playing",
+      "fullScreen",
+      "playList",
+      "currentIndex",
+      "mode",
+      "sequenceList"
+    ]),
     ...mapGetters(["currentSong"]),
     iconMode() {
       return this.mode === playMode.sequence
@@ -162,6 +171,22 @@ export default {
         audio.pause();
       }
     },
+    mode(mode) {
+      if (mode === playMode.random) {
+        const playListR = shuffle(this.sequenceList);
+        const currentIndex = playListR.findIndex(item => {
+          return item.id === this.currentSong.id;
+        });
+        this.setPlayList(playListR);
+        this.setCurrentIndex(currentIndex);
+      } else {
+        const currentIndex = this.sequenceList.findIndex(item => {
+          return item.id === this.currentSong.id;
+        });
+        this.setCurrentIndex(currentIndex);
+        this.setPlayList(this.sequenceList);
+      }
+    },
     volume(newData, oldData) {
       if (newData > 9) {
         this.volume = 10;
@@ -176,8 +201,18 @@ export default {
       "setFullScreen",
       "setPlayingState",
       "setCurrentIndex",
-      "setPlayMode"
+      "setPlayMode",
+      "setPlayList"
     ]),
+    end() {
+      if (this.mode === playMode.loop) {
+        const audio = this.$refs.audio;
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        this.next();
+      }
+    },
     upVolumn() {
       this.volume += 1;
       this.$nextTick(() => {

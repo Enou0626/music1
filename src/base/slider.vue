@@ -35,6 +35,8 @@ export default {
     });
   },
   activated() {
+    console.log("slider activated");
+
     this._autoPlay();
   },
   deactivated() {
@@ -87,9 +89,11 @@ export default {
     _autoPlay() {
       this.timer = setTimeout(() => {
         let pageIndex = this.currentIndex + 1;
-        pageIndex = pageIndex >= this.children.length - 2 ? 0 : pageIndex;
+        if (this.children) {
+          pageIndex = pageIndex >= this.children.length - 2 ? 0 : pageIndex;
+          this.scroll.goToPage(pageIndex, 0, 400);
+        }
         // debugger
-        this.scroll.goToPage(pageIndex, 0, 400);
       }, 1000);
     }
   }

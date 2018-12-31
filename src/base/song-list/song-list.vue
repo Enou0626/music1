@@ -29,6 +29,7 @@ export default {
       default: null
     }
   },
+  mounted() {},
   methods: {
     ...mapActions(["selectSong"]),
     getDesc(song) {
