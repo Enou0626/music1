@@ -6,7 +6,7 @@
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="play-wrapper">
-        <div ref="playBtn" v-show="songs.length>0" class="play">
+        <div ref="playBtn" v-show="songs.length>0" class="play" @click="handleRandomPlay">
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
         </div>
@@ -33,6 +33,7 @@
 <script>
 import SongList from "base/song-list/song-list";
 import Scroll from "base/scroll";
+import { mapActions } from "vuex";
 const RESERVED_HEIGHT = 40;
 export default {
   name: "",
@@ -73,6 +74,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["randomPlay"]),
+    handleRandomPlay() {
+      this.randomPlay(this.songs);
+    },
     back() {
       this.$router.back();
     },

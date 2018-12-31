@@ -5,7 +5,7 @@
         class="item"
         v-for="(song, index) in songs"
         :key="index"
-        @click.stop="selectSongHandler(index)"
+        @click.once="selectSongHandler(index)"
       >
         <div class="content">
           <h2 class="name">{{song.name}}</h2>
