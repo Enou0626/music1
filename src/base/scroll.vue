@@ -68,6 +68,8 @@ export default {
   watch: {
     data(val) {
       setTimeout(() => {
+        console.log(val);
+
         this.refresh();
       }, 20);
     }

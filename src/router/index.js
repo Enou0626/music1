@@ -5,6 +5,8 @@ import Recommend from "components/recommend/recommend"
 import Singer from "components/Singer/Singer"
 import SingerList from "components/singer-detail/singer-list"
 import SingerDetail from "components/singer-detail/singer-detail"
+import RecommendList from "components/recommend/recommend-list"
+import RecommendFirst from "components/recommend/recommend-first"
 
 Vue.use(Router);
 
@@ -16,8 +18,18 @@ export default
       redirect: '/recommend'
     },
     {
+      component: RecommendFirst,
       path: '/recommend',
-      component: Recommend
+      redirect: '/recommend/index',
+      children: [{
+        path: '/recommend/list',
+        component: RecommendList
+      },
+      {
+        path: '/recommend/index',
+        component: Recommend
+      }
+      ]
     },
     {
       component: Singer,

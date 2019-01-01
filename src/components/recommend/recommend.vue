@@ -12,7 +12,12 @@
         <div class="recommend-list">
           <h1 class="list-title">热门歌单推荐</h1>
           <ul>
-            <li v-for="(item, index) in discList" :key="index" class="item">
+            <li
+              v-for="(item, index) in discList"
+              @click="handleItemClick(item)"
+              :key="index"
+              class="item"
+            >
               <div class="icon">
                 <img @load="loadImage" v-lazy="item.imgurl" style="with:60px;height:60px">
               </div>
@@ -26,6 +31,7 @@
       </div>
       <loading :data="discList"></loading>
     </scroll>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -34,6 +40,7 @@
 import { getRecommend, getDisclist } from "api/recommend";
 import Slider from "base/slider";
 import Scroll from "base/scroll";
+import { mapMutations } from "vuex";
 // import Loading from "base/Loading/Loading";
 // import axios from "axios";
 // import originJsonp from 'jsonp'
@@ -51,6 +58,12 @@ export default {
     Scroll
   },
   methods: {
+    ...mapMutations(["setDisc"]),
+    handleItemClick(item) {
+      this.setDisc(item);
+      this.$router.push(`/recommend/list`);
+      // this.$router.push(`/recommend/${item.dissid}`);
+    },
     loadImage() {
       if (!this.loadImageTag) {
         this.$refs.scroll.refresh();
@@ -87,10 +100,7 @@ export default {
 @import '~common/stylus/variable';
 
 .recommend {
-  position: fixed;
-  width: 100%;
-  top: 88px;
-  bottom: 0;
+  height: 100%;
 
   .loadingBox {
     position: absolute;
@@ -101,7 +111,7 @@ export default {
 }
 
 .recommendContent {
-  height: 100%;
+  // height: 100%;
   overflow: hidden;
 }
 

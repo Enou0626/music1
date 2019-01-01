@@ -7,8 +7,10 @@ export default {
   name: "test",
   data() {
     return {};
-  }
+  },
+  tag:
 };
+
 </script>
 
 <style lang="" scoped>

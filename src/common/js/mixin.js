@@ -1,10 +1,10 @@
-import {mapGetters, mapMutations, mapActions} from 'vuex'
-import {playMode} from 'common/js/config'
-import {shuffle} from 'common/js/util'
+import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
+import { playMode } from 'common/js/config'
+import { shuffle } from 'common/js/util'
 
 export const playlistMixin = {
   computed: {
-    ...mapGetters([
+    ...mapState([
       'playlist'
     ])
   },

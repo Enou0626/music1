@@ -20,5 +20,8 @@ export default {
     },
     [types.SET_PLAY_MODE](state, payload) {
         state.mode = payload
+    },
+    [types.SET_DISC](state, payload) {
+        state.disc = payload
     }
 }
