@@ -34,7 +34,6 @@ export default {
     }, 20);
   },
   activated() {
-    console.log("scroll activated");
     this.refresh();
   },
   methods: {
@@ -42,7 +41,7 @@ export default {
       // console.log(this.$refs.wrapper);
 
       if (this.$refs.wrapper) {
-        this.scroll = new Btscroll(".scroll-box", {
+        this.scroll = new Btscroll(this.$refs.wrapper, {
           probeType: this.probeType,
           click: true
         });
@@ -57,8 +56,6 @@ export default {
         });
     },
     refresh() {
-      console.log("scroll refresh");
-
       this.scroll && this.scroll.refresh();
     },
     scrollToElement(el, delay) {
@@ -68,10 +65,8 @@ export default {
   watch: {
     data(val) {
       setTimeout(() => {
-        console.log(val);
-
         this.refresh();
-      }, 20);
+      }, 200);
     }
   }
 };
@@ -79,6 +74,6 @@ export default {
 
 <style lang="stylus" scoped>
 .scroll-box {
-  height: 100%;
+  // height: 100%;
 }
 </style>

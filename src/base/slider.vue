@@ -35,8 +35,6 @@ export default {
     });
   },
   activated() {
-    console.log("slider activated");
-
     this._autoPlay();
   },
   deactivated() {
@@ -65,26 +63,28 @@ export default {
         (!isResize ? width + clientWidth * 2 : width) + "px";
     },
     _initSlider() {
-      setTimeout(() => {
-        this.scroll = new BtScroll(".slider", {
-          // click: true,
-          scrollX: true,
-          momentum: false,
-          snap: {
-            loop: true
-          }
-        });
+      if (this.$refs.slider) {
+        setTimeout(() => {
+          this.scroll = new BtScroll(this.$refs.slider, {
+            // click: true,
+            scrollX: true,
+            momentum: false,
+            snap: {
+              loop: true
+            }
+          });
 
-        this.scroll.on("beforeScrollStart", () => {
-          clearTimeout(this.timer);
-        });
+          this.scroll.on("beforeScrollStart", () => {
+            clearTimeout(this.timer);
+          });
 
-        this.scroll.on("scrollEnd", () => {
-          let pageIndex = this.scroll.getCurrentPage().pageX;
-          this.currentIndex = pageIndex;
-          this._autoPlay();
-        });
-      }, 20);
+          this.scroll.on("scrollEnd", () => {
+            let pageIndex = this.scroll.getCurrentPage().pageX;
+            this.currentIndex = pageIndex;
+            this._autoPlay();
+          });
+        }, 20);
+      }
     },
     _autoPlay() {
       this.timer = setTimeout(() => {

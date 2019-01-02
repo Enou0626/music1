@@ -1,5 +1,5 @@
 <template>
-  <div class="singer">
+  <div class="singer-list">
     <loading :data="singers"></loading>
     <list-view @itemClick="itemClick" :data="singers"></list-view>
   </div>
@@ -92,6 +92,13 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.singer-list {
+  // position: relative;
+  // top: 0;
+  // bottom: 0;
+  height: 100%;
+}
+
 .slide-enter-active, .slide-leave-active {
   transition: all 0.3s;
 }

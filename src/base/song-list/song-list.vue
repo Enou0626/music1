@@ -38,7 +38,7 @@ export default {
     selectSongHandler(index) {
       const songs = this.songs;
       this.selectSong({ songs, index });
-      // console.log(this.selectSong);
+      // console.log(this.songs);
     }
   }
 };

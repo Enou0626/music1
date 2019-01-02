@@ -14,20 +14,18 @@
       <div class="filter" ref="filter"></div>
     </div>
     <div class="bg-layer" ref="layer"></div>
-    <div class="scroll-wrapper" ref="scrollWrapper">
-      <scroll
-        :probeType="3"
-        :isListenScroll="true"
-        @listenScroll="listenScroll"
-        class="list"
-        :data="songs"
-        ref="list"
-      >
-        <div class="song-list-wrapper">
-          <song-list :songs="songs"></song-list>
-        </div>
-      </scroll>
-    </div>
+    <scroll
+      :probeType="3"
+      :isListenScroll="true"
+      @listenScroll="listenScroll"
+      class="list"
+      :data="songs"
+      ref="list"
+    >
+      <div class="song-list-wrapper">
+        <song-list :songs="songs"></song-list>
+      </div>
+    </scroll>
   </div>
 </template>
 
@@ -64,10 +62,11 @@ export default {
     }
   },
   mounted() {
-    this.$refs.scrollWrapper.style.top = `${this.$refs.bgImage.clientHeight}px`;
-    // this.$refs.list.refresh();
+    // this.$refs.scrollWrapper.style.top = `${this.$refs.bgImage.clientHeight}px`;
     this.bgImageHeight = this.$refs.bgImage.clientHeight;
     this.minTranslate = this.bgImageHeight - RESERVED_HEIGHT;
+    this.$refs.list.$el.style.top = `${this.bgImageHeight}px`;
+    this.$refs.list.refresh();
   },
   activated() {
     // this.$refs.list.refresh();
@@ -80,8 +79,9 @@ export default {
   methods: {
     ...mapActions(["randomPlay"]),
     handlePlaylist() {
-      this.$refs.list.$el.style.bottom = "100px";
+      this.$refs.list.$el.style.bottom = "60px";
       this.$refs.list.refresh();
+      // this.$refs.scrollWrapper.style.paddingBottom = "100px";
     },
     handleRandomPlay() {
       this.randomPlay(this.songs);
@@ -227,6 +227,9 @@ export default {
   }
 
   .list {
+    position: fixed;
+    top: 0;
+    bottom: 0;
     width: 100%;
     background: $color-background;
 

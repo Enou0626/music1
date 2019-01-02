@@ -1,12 +1,20 @@
 <template>
-  <div class="singer">
+  <div class="singer" ref="singerBox">
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
   </div>
 </template>
 <script>
-export default {};
+import { playlistMixin } from "common/js/mixin";
+export default {
+  mixins: [playlistMixin],
+  methods: {
+    handlePlaylist() {
+      this.$refs.singerBox.style.bottom = "60px";
+    }
+  }
+};
 </script>
 <style lang="stylus" scoped>
 .singer {

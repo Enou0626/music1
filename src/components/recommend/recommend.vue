@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" ref="recommendBox">
     <scroll :data="this.discList" class="recommendContent" ref="scroll">
       <div>
         <slider v-if="slider.length">
@@ -31,7 +31,7 @@
       </div>
       <loading :data="discList"></loading>
     </scroll>
-    <!-- <router-view></router-view> -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -41,11 +41,13 @@ import { getRecommend, getDisclist } from "api/recommend";
 import Slider from "base/slider";
 import Scroll from "base/scroll";
 import { mapMutations } from "vuex";
+import { playlistMixin } from "common/js/mixin";
 // import Loading from "base/Loading/Loading";
 // import axios from "axios";
 // import originJsonp from 'jsonp'
 
 export default {
+  mixins: [playlistMixin],
   data() {
     return {
       slider: [],
@@ -59,6 +61,9 @@ export default {
   },
   methods: {
     ...mapMutations(["setDisc"]),
+    handlePlaylist() {
+      this.$refs.recommendBox.style.bottom = "60px";
+    },
     handleItemClick(item) {
       this.setDisc(item);
       this.$router.push(`/recommend/list`);
@@ -100,7 +105,11 @@ export default {
 @import '~common/stylus/variable';
 
 .recommend {
-  height: 100%;
+  // height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 88px;
+  bottom: 0;
 
   .loadingBox {
     position: absolute;
@@ -111,7 +120,7 @@ export default {
 }
 
 .recommendContent {
-  // height: 100%;
+  height: 100%;
   overflow: hidden;
 }
 

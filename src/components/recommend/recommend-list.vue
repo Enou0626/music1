@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MusicList from "components/music-list/music-list1";
+import MusicList from "components/music-list/music-list";
 import { mapState } from "vuex";
 import { getSonglist } from "api/recommend";
 import { creatSong } from "common/js/song";
@@ -26,6 +26,9 @@ export default {
     return {
       songs: []
     };
+  },
+  activated() {
+    this._getList(this.disc.dissid);
   },
   created() {
     if (!this.disc.dissid) {
