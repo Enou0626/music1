@@ -6,6 +6,7 @@ import Singer from "components/Singer/Singer"
 import SingerList from "components/singer-detail/singer-list"
 import SingerDetail from "components/singer-detail/singer-detail"
 import RecommendList from "components/recommend/Recommend-list"
+import Rank from "components/rank/rank"
 
 Vue.use(Router);
 
@@ -25,8 +26,8 @@ export default
       }]
     },
     {
-      component: Singer,
       path: '/singer',
+      component: Singer,
       redirect: '/singer/list',
       children: [{
         path: '/singer/list',
@@ -35,6 +36,10 @@ export default
         path: '/singer/:id',
         component: SingerDetail
       }]
+    },
+    {
+      path: '/rank',
+      component: Rank
     }
     ]
   })
