@@ -15,7 +15,7 @@
         </li>
       </ul>
     </scroll>
-    <!-- <router-view></router-view> -->
+    <router-view></router-view>
   </div>
 </template>
 
@@ -23,6 +23,7 @@
 import { getTopList } from "api/rank";
 import { playlistMixin } from "common/js/mixin";
 import Scroll from "base/scroll";
+import { mapMutations } from "vuex";
 export default {
   name: "rank",
   mixins: [playlistMixin],
@@ -38,6 +39,7 @@ export default {
     this._getTopList();
   },
   methods: {
+    ...mapMutations(["setTopList"]),
     handlePlaylist() {
       this.$refs.rank.style.bottom = "60px";
     },
@@ -49,7 +51,10 @@ export default {
         console.log(this.topList);
       });
     },
-    selectItem() {}
+    selectItem(item) {
+      this.setTopList(item);
+      this.$router.push(`/rank/${item.id}`);
+    }
   }
 };
 </script>

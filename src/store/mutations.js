@@ -23,5 +23,8 @@ export default {
     },
     [types.SET_DISC](state, payload) {
         state.disc = payload
+    },
+    [types.SET_TOP_LIST](state, payload) {
+        state.topList = payload
     }
 }

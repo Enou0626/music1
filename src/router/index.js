@@ -7,6 +7,7 @@ import SingerList from "components/singer-detail/singer-list"
 import SingerDetail from "components/singer-detail/singer-detail"
 import RecommendList from "components/recommend/Recommend-list"
 import Rank from "components/rank/rank"
+import TopList from "components/rank/toplist"
 
 Vue.use(Router);
 
@@ -39,7 +40,13 @@ export default
     },
     {
       path: '/rank',
-      component: Rank
+      component: Rank,
+      children: [
+        {
+          path: ':id',
+          component: TopList
+        }
+      ]
     }
     ]
   })
