@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" v-show="!data.length">
+  <div class="loading" v-show="!data.length>0">
     <img width="24" height="24" src="./loading.gif">
     <p class="desc">{{title}}</p>
   </div>
@@ -26,8 +26,9 @@ export default {
 .loading {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  width: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
   text-align: center;
   z-index: 100;
 

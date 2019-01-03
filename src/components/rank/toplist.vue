@@ -9,7 +9,6 @@ import MusicList from "components/music-list/music-list";
 import { getMusicList } from "api/rank";
 import { mapState } from "vuex";
 import { creatSong } from "common/js/song";
-
 export default {
   name: "top-list",
   components: {
@@ -34,7 +33,9 @@ export default {
       getMusicList(id).then(res => {
         // console.log(res);
         if (res.code === 0) {
-          this.songs = this._normalizeArr(res.songlist);
+          setTimeout(() => {
+            this.songs = this._normalizeArr(res.songlist);
+          }, 500);
         }
       });
     },

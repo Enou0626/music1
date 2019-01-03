@@ -15,14 +15,19 @@
           <p class="desc">{{getDesc(song)}}</p>
         </div>
       </li>
+      <loading :data="songs"></loading>
     </ul>
   </div>
 </template>
 
 <script>
+import Loading from "base/loading/loading";
 import { mapActions } from "vuex";
 export default {
   name: "song-list",
+  components: {
+    Loading
+  },
   data() {
     return {};
   },

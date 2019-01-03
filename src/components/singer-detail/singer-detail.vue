@@ -41,7 +41,9 @@ export default {
           // console.log(res);
           if (res.code === 0) {
             let musicList = this._normalizeData(res.data.list);
-            this.songs = musicList;
+            setTimeout(() => {
+              this.songs = musicList;
+            }, 500);
             // console.log(this.songs);
           }
         });
