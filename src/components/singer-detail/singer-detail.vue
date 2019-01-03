@@ -17,7 +17,11 @@ export default {
   components: {
     MusicList
   },
-  created() {},
+  created() {
+    if (!this.singer.length > 0) {
+      this.$router.push("/singer/list");
+    }
+  },
   activated() {
     this._getSingerDetail(this.singer.id);
   },

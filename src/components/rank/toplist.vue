@@ -16,6 +16,9 @@ export default {
     MusicList
   },
   created() {
+    if (!this.topList.id) {
+      this.$router.push("/rank");
+    }
     this._getMusicList(this.topList.id);
   },
   data() {
