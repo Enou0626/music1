@@ -23,7 +23,7 @@
       ref="list"
     >
       <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
+        <song-list :rank="rank" :songs="songs"></song-list>
       </div>
     </scroll>
   </div>
