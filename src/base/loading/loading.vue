@@ -16,6 +16,11 @@ export default {
       default: () => {
         return [];
       }
+    },
+    watch: {
+      data(newData, oldData) {
+        console.log(newData, oldData);
+      }
     }
   }
 };

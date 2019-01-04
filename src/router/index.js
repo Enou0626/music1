@@ -8,6 +8,7 @@ import SingerDetail from "components/singer-detail/singer-detail"
 import RecommendList from "components/recommend/Recommend-list"
 import Rank from "components/rank/rank"
 import TopList from "components/rank/toplist"
+import Search from "components/search/search"
 
 Vue.use(Router);
 
@@ -47,6 +48,10 @@ export default
           component: TopList
         }
       ]
+    },
+    {
+      path: '/search',
+      component: Search
     }
     ]
   })
