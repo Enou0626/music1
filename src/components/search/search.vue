@@ -1,9 +1,9 @@
 <template>
   <div class="search">
     <div class="search-box-wrapper">
-      <search-box ref="searchBox"></search-box>
+      <search-box ref="searchBox" @query="onQueryChange"></search-box>
     </div>
-    <div ref="shortcutWrapper" class="shortcut-wrapper">
+    <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
       <div class="shortcut">
         <div class="hot-key">
           <h1 class="title">热门搜索</h1>
@@ -15,6 +15,7 @@
         </div>
       </div>
     </div>
+    <suggest v-show="query" :query="query"></suggest>
   </div>
 </template>
 
@@ -23,7 +24,7 @@ import SearchBox from "base/search-box/search-box";
 // import SearchList from 'base/search-list/search-list'
 // import Scroll from 'base/scroll/scroll'
 // import Confirm from 'base/confirm/confirm'
-// import Suggest from 'components/suggest/suggest'
+import Suggest from "components/suggest/suggest";
 import { getHotKey } from "api/search";
 import { ERR_OK } from "api/config";
 import { playlistMixin, searchMixin } from "common/js/mixin";
@@ -46,6 +47,9 @@ export default {
     this._getHotKey();
   },
   methods: {
+    onQueryChange(query) {
+      this.query = query;
+    },
     addQuery(k) {
       this.$refs.searchBox.setQuery(k);
     },
@@ -80,11 +84,11 @@ export default {
     // }
   },
   components: {
-    SearchBox
+    SearchBox,
     // SearchList,
     // Scroll,
     // Confirm,
-    // Suggest
+    Suggest
   }
 };
 </script>
