@@ -1,5 +1,5 @@
 <template>
-  <scroll class="suggest" :data="result">
+  <scroll class="suggest" :data="result" :isPullUp="true" @scrollToEnd="onScrollEnd">
     <ul class="suggest-list">
       <li
         @click="selectItem(item)"
@@ -49,6 +49,9 @@ export default {
     };
   },
   methods: {
+    onScrollEnd() {
+      console.log("scroll end");
+    },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
         return item.singername;
@@ -70,9 +73,6 @@ export default {
         ret.push({ ...data.zhida, ...{ type: TYPE_SINGER } });
       }
       if (data.song) {
-        // let temp = data.song.list;
-        // delete temp[0].songname;
-        // ret = ret.concat(this._normalizeSongs(temp));
         ret = ret.concat(this._normalizeSongs(data.song.list));
       }
       return ret;
@@ -85,18 +85,22 @@ export default {
         }
       });
       return ret;
-    }
-  },
-  watch: {
-    query(newData) {
+    },
+    _query(newData) {
       search(newData, this.page, this.zhida, perPageNum).then(res => {
         if (res.data.code === 0) {
           this.result = this._genResult(res.data.data);
-          // console.log(res.data);
+          console.log(res.data);
 
-          // console.log(this.result);
+          console.log(this.result);
         }
       });
+    },
+    queryMore() {}
+  },
+  watch: {
+    query(newData) {
+      this._query(newData);
     }
   }
 };

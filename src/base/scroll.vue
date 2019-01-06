@@ -41,10 +41,19 @@ export default {
     }, 200);
   },
   activated() {
-    this.refresh();
+    // this.refresh();
   },
   methods: {
-    _listenScrollEnd() {},
+    _listenScrollEnd(e) {
+      this.scroll.on("scrollEnd", e => {
+        // console.log(e, this.scroll.maxScrollY);
+
+        if (e.y < this.scroll.maxScrollY + 50) {
+          // debugger;
+          this.$emit("scrollToEnd");
+        }
+      });
+    },
     _initScroll() {
       // console.log(this.$refs.wrapper);
 
@@ -64,7 +73,9 @@ export default {
         });
     },
     refresh() {
-      this.scroll && this.scroll.refresh();
+      console.log(this.scroll.refresh);
+
+      // this.scroll && this.scroll.refresh();
     },
     scrollToElement(el, delay) {
       this.scroll && this.scroll.scrollToElement(el, delay);

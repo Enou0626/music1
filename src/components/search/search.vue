@@ -15,7 +15,9 @@
         </div>
       </div>
     </div>
-    <suggest v-show="query" :query="query"></suggest>
+    <div class="suggestWrap">
+      <suggest v-show="query" :query="query"></suggest>
+    </div>
   </div>
 </template>
 
@@ -97,11 +99,12 @@ export default {
 @import '~common/stylus/variable';
 @import '~common/stylus/mixin';
 
+.suggestWrap {
+  height: calc(100% - 170px);
+}
+
 .search {
-  position: absolute;
-  top: 80px;
-  bottom: 50px;
-  width: 100%;
+  height: 100%;
 
   .search-box-wrapper {
     margin: 20px;
