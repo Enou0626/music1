@@ -23,6 +23,10 @@ export default {
     isListenScroll: {
       type: Boolean,
       default: false
+    },
+    isPullUp: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
@@ -31,12 +35,16 @@ export default {
       if (this.isListenScroll) {
         this._listenScroll();
       }
-    }, 20);
+      if (this.isPullUp) {
+        this._listenScrollEnd();
+      }
+    }, 200);
   },
   activated() {
     this.refresh();
   },
   methods: {
+    _listenScrollEnd() {},
     _initScroll() {
       // console.log(this.$refs.wrapper);
 

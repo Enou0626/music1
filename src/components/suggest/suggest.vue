@@ -1,5 +1,5 @@
 <template>
-  <div class="suggest">
+  <scroll class="suggest" :data="result">
     <ul class="suggest-list">
       <li
         @click="selectItem(item)"
@@ -14,17 +14,21 @@
           <p class="text" v-html="getDisplayName(item)"></p>
         </div>
       </li>
-      <!-- <loading v-show="hasMore" title=""></loading> -->
     </ul>
-  </div>
+  </scroll>
 </template>
 
 <script>
 import { search } from "api/search";
 import { creatSong } from "common/js/song";
+import Scroll from "base/scroll";
 const TYPE_SINGER = "singerName";
+const perPageNum = 30;
 export default {
   name: "suggest",
+  components: {
+    Scroll
+  },
   props: {
     query: {
       type: String,
@@ -85,12 +89,12 @@ export default {
   },
   watch: {
     query(newData) {
-      search(newData, this.page, this.zhida).then(res => {
+      search(newData, this.page, this.zhida, perPageNum).then(res => {
         if (res.data.code === 0) {
           this.result = this._genResult(res.data.data);
-          console.log(res.data);
+          // console.log(res.data);
 
-          console.log(this.result);
+          // console.log(this.result);
         }
       });
     }

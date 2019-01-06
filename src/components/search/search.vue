@@ -98,6 +98,11 @@ export default {
 @import '~common/stylus/mixin';
 
 .search {
+  position: absolute;
+  top: 80px;
+  bottom: 50px;
+  width: 100%;
+
   .search-box-wrapper {
     margin: 20px;
   }
