@@ -73,9 +73,8 @@ export default {
         });
     },
     refresh() {
-      console.log(this.scroll.refresh);
-
-      // this.scroll && this.scroll.refresh();
+      // console.log(this.scroll.refresh);
+      this.scroll && this.scroll.refresh();
     },
     scrollToElement(el, delay) {
       this.scroll && this.scroll.scrollToElement(el, delay);

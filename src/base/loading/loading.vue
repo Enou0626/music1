@@ -30,9 +30,9 @@ export default {
 
 .loading {
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   width: 60px;
   text-align: center;
   z-index: 100;

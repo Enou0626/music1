@@ -14,6 +14,13 @@
           <p class="text" v-html="getDisplayName(item)"></p>
         </div>
       </li>
+      <div
+        v-show="hasMore"
+        class="loading-wrap"
+        style="position:relative; height:50px; width:100%;"
+      >
+        <loading title=" "></loading>
+      </div>
     </ul>
   </scroll>
 </template>
@@ -22,21 +29,19 @@
 import { search } from "api/search";
 import { creatSong } from "common/js/song";
 import Scroll from "base/scroll";
+import Loading from "base/loading/loading";
 const TYPE_SINGER = "singerName";
 const perPageNum = 30;
 export default {
   name: "suggest",
   components: {
-    Scroll
+    Scroll,
+    Loading
   },
   props: {
     query: {
       type: String,
       default: ""
-    },
-    page: {
-      type: Number,
-      default: 1
     },
     zhida: {
       type: Boolean,
@@ -45,12 +50,15 @@ export default {
   },
   data() {
     return {
-      result: []
+      result: [],
+      page: 1,
+      hasMore: true
     };
   },
   methods: {
     onScrollEnd() {
       console.log("scroll end");
+      this._queryMore();
     },
     getDisplayName(item) {
       if (item.type === TYPE_SINGER) {
@@ -86,17 +94,33 @@ export default {
       });
       return ret;
     },
+    _checkMore(song) {
+      if (song.curnum + song.curpage * perPageNum >= song.totalnum) {
+        this.hasMore = false;
+      }
+    },
+    _queryMore() {
+      if (this.hasMore) {
+        search(this.query, this.page++, this.zhida, perPageNum).then(res => {
+          if (res.data.code === 0) {
+            const data = res.data;
+            this.result = this.result.concat(this._genResult(data.data));
+            this._checkMore(data.data.song);
+          }
+        });
+      }
+    },
     _query(newData) {
+      this.hasMore = true;
       search(newData, this.page, this.zhida, perPageNum).then(res => {
         if (res.data.code === 0) {
-          this.result = this._genResult(res.data.data);
-          console.log(res.data);
-
-          console.log(this.result);
+          const data = res.data;
+          this.result = this._genResult(data.data);
+          // console.log(data);
+          this._checkMore(data.data.song);
         }
       });
-    },
-    queryMore() {}
+    }
   },
   watch: {
     query(newData) {
