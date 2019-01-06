@@ -30,6 +30,7 @@ import { search } from "api/search";
 import { creatSong } from "common/js/song";
 import Scroll from "base/scroll";
 import Loading from "base/loading/loading";
+import { mapActions } from "vuex";
 const TYPE_SINGER = "singerName";
 const perPageNum = 30;
 export default {
@@ -56,6 +57,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["querySelect"]),
     onScrollEnd() {
       // console.log("scroll end");
       this._queryMore();
@@ -74,10 +76,17 @@ export default {
         return "icon-music";
       }
     },
-    selectItem() {},
-    _genResult(data) {
+    selectItem(item) {
+      if (item.type === TYPE_SINGER) {
+        this.$router.push(`/singer/${item.singermid}`);
+      } else {
+        console.log("selected song");
+        this.querySelect(item);
+      }
+    },
+    _genResult(data, isFrist) {
       let ret = [];
-      if (data.zhida && data.zhida.singerid) {
+      if (isFrist && data.zhida && data.zhida.singerid) {
         ret.push({ ...data.zhida, ...{ type: TYPE_SINGER } });
       }
       if (data.song) {
@@ -104,7 +113,7 @@ export default {
         search(this.query, this.page++, this.zhida, perPageNum).then(res => {
           if (res.data.code === 0) {
             const data = res.data;
-            this.result = this.result.concat(this._genResult(data.data));
+            this.result = this.result.concat(this._genResult(data.data, false));
             this._checkMore(data.data.song);
           }
         });
@@ -119,8 +128,8 @@ export default {
       search(newData, this.page, this.zhida, perPageNum).then(res => {
         if (res.data.code === 0) {
           const data = res.data;
-          this.result = this._genResult(data.data);
-          // console.log(data);
+          this.result = this._genResult(data.data, true);
+          console.log(data, this.result);
           this._checkMore(data.data.song);
         }
       });
