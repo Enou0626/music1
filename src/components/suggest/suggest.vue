@@ -1,5 +1,5 @@
 <template>
-  <scroll class="suggest" :data="result" :isPullUp="true" @scrollToEnd="onScrollEnd">
+  <scroll class="suggest" ref="suggest" :data="result" :isPullUp="true" @scrollToEnd="onScrollEnd">
     <ul class="suggest-list">
       <li
         @click="selectItem(item)"
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     onScrollEnd() {
-      console.log("scroll end");
+      // console.log("scroll end");
       this._queryMore();
     },
     getDisplayName(item) {
@@ -111,7 +111,11 @@ export default {
       }
     },
     _query(newData) {
+      this.page = 1;
       this.hasMore = true;
+      if (this.$refs.suggest) {
+        this.$refs.suggest.scrollTo(0, 0);
+      }
       search(newData, this.page, this.zhida, perPageNum).then(res => {
         if (res.data.code === 0) {
           const data = res.data;

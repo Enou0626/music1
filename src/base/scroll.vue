@@ -78,6 +78,9 @@ export default {
     },
     scrollToElement(el, delay) {
       this.scroll && this.scroll.scrollToElement(el, delay);
+    },
+    scrollTo(x, y, delay) {
+      this.scroll && this.scroll.scrollTo(x, y, delay);
     }
   },
   watch: {
