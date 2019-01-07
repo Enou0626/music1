@@ -10,7 +10,41 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api/getDisclist': { // recommond.js
+        headers: {
+          referer: 'https://c.y.qq.com/',
+          host: 'c.y.qq.com'
+        },
+        target: 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg', // 目标接口域名
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api/getDisclist': '' // 重写接口
+        }
+      },
+      '/api/getSongclist': { // recommond.js
+        headers: {
+          referer: 'https://c.y.qq.com/',
+          host: 'c.y.qq.com'
+        },
+        target: 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg', // 目标接口域名
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api/getSongclist': '' // 重写接口
+        }
+      },
+      '/api/search': { // search.js
+        headers: {
+          referer: 'https://c.y.qq.com/',
+          host: 'c.y.qq.com'
+        },
+        target: 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp', // 目标接口域名
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api/search': '' // 重写接口
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

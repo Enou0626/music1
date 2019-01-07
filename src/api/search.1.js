@@ -37,10 +37,6 @@ export function search(query, page, zhida, perpage) {
   })
 
   return get(url, {
-    // headers: {
-    //   referer: 'https://c.y.qq.com/',
-    //   host: 'c.y.qq.com'
-    // },
     params: data
   }).then((res) => {
     return Promise.resolve(res)
