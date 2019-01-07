@@ -2,7 +2,7 @@ import * as type from "./mutation-types";
 import { playMode } from "common/js/config";
 import { shuffle } from "common/js/util";
 
-function spliceList(playList, item, currentIndex, isPlayList) {
+function spliceList(playList, item, currentIndex) {
     const sameIndex = playList.findIndex((song) => {
         return song.songmid === item.songmid
     })
@@ -10,11 +10,11 @@ function spliceList(playList, item, currentIndex, isPlayList) {
     if (sameIndex > -1) {
         if (sameIndex > currentIndex) { // 删除点在插入点之后
             playList.splice(sameIndex, 1)
-            console.log('after');
+            // console.log('after');
         } else { // 删除点在插入点之前
             playList.splice(sameIndex, 1);
-            currentIndex = currentIndex - 1;
-            console.log('before');
+            currentIndex = currentIndex--;
+            // console.log('before');
         }
     }
 
@@ -50,9 +50,7 @@ export default {
     querySelect({ commit, state }, item) {
         let playList = state.playList.slice();
         let sequenceList = state.sequenceList.slice();
-        // const oldIndex = state.currentIndex;
         let currentIndex = state.currentIndex + 1;
-        // const currentSong = playList[oldIndex];
         currentIndex = spliceList(playList, item, currentIndex);
         spliceList(sequenceList, item, currentIndex);
 
