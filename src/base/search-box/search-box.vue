@@ -8,6 +8,7 @@
 
 <script type="text/ecmascript-6">
 import { debounce } from "common/js/util";
+import { mapState } from "vuex";
 export default {
   props: {
     placeholder: {
@@ -19,6 +20,14 @@ export default {
     return {
       query: ""
     };
+  },
+  computed: mapState(["isScrollStart"]),
+  watch: {
+    isScrollStart(newData) {
+      if (newData) {
+        this.$refs.query.blur();
+      }
+    }
   },
   methods: {
     clear() {

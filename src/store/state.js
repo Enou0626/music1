@@ -9,7 +9,8 @@ export default {
     mode: playMode.sequence,
     currentIndex: -1,
     disc: {},
-    topList: {}
+    topList: {},
+    isScrollStart: false
     // searchHistory: loadSearch(),
     // playHistory: loadPlay(),
     // favoriteList: loadFavorite()

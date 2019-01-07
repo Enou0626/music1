@@ -26,5 +26,10 @@ export default {
     },
     [types.SET_TOP_LIST](state, payload) {
         state.topList = payload
+    },
+    [types.SET_SCROLL_START](state, payload) {
+        console.log('scrollstart');
+
+        state.isScrollStart = payload
     }
 }

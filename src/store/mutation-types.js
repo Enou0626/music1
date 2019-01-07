@@ -21,3 +21,5 @@ export const SET_SEARCH_HISTORY = 'setSearchHistory'
 export const SET_PLAY_HISTORY = 'setPlayHistory'
 
 export const SET_FAVORITE_LIST = 'setFavoriteList'
+
+export const SET_SCROLL_START = 'setScrollStart'

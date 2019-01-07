@@ -6,11 +6,13 @@
 
 <script>
 import Btscroll from "better-scroll";
+import { mapMutations } from "vuex";
 export default {
   name: "scroll-box",
   data() {
     return {};
   },
+
   props: {
     data: {
       type: Array,
@@ -21,6 +23,10 @@ export default {
       default: 1
     },
     isListenScroll: {
+      type: Boolean,
+      default: false
+    },
+    listenScrollStart: {
       type: Boolean,
       default: false
     },
@@ -38,12 +44,23 @@ export default {
       if (this.isPullUp) {
         this._listenScrollEnd();
       }
+      if (this.listenScrollStart) {
+        this._listenScrollStart();
+      }
     }, 200);
   },
   activated() {
     // this.refresh();
   },
   methods: {
+    ...mapMutations(["setScrollStart"]),
+    _listenScrollStart() {
+      this.scroll &&
+        this.scroll.on("beforeScrollStart", () => {
+          // this.$emit("scrollStart");
+          this.setScrollStart(true);
+        });
+    },
     _listenScrollEnd(e) {
       this.scroll.on("scrollEnd", e => {
         // console.log(e, this.scroll.maxScrollY);

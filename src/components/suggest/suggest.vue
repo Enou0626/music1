@@ -1,5 +1,13 @@
 <template>
-  <scroll class="suggest" ref="suggest" :data="result" :isPullUp="true" @scrollToEnd="onScrollEnd">
+  <scroll
+    class="suggest"
+    ref="suggest"
+    :listenScrollStart="true"
+    :data="result"
+    :isPullUp="true"
+    @scrollToEnd="onScrollEnd"
+    @scrollStart="onScrollStart"
+  >
     <ul class="suggest-list">
       <li
         @click="selectItem(item)"
@@ -58,6 +66,9 @@ export default {
   },
   methods: {
     ...mapActions(["querySelect"]),
+    onScrollStart() {
+      console.log("scroll start");
+    },
     onScrollEnd() {
       // console.log("scroll end");
       this._queryMore();
