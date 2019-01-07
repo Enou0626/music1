@@ -65,9 +65,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["querySelect"]),
+    ...mapActions(["querySelect", "addQueryHistory"]),
     onScrollStart() {
-      console.log("scroll start");
+      // console.log("scroll start");
     },
     onScrollEnd() {
       // console.log("scroll end");
@@ -93,6 +93,7 @@ export default {
       } else {
         console.log("selected song");
         this.querySelect(item);
+        this.addQueryHistory(item.name);
       }
     },
     _genResult(data, isFrist) {
@@ -140,7 +141,7 @@ export default {
         if (res.data.code === 0) {
           const data = res.data;
           this.result = this._genResult(data.data, true);
-          console.log(data, this.result);
+          // console.log(data, this.result);
           this._checkMore(data.data.song);
         }
       });

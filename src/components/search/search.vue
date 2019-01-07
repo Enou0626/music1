@@ -13,6 +13,15 @@
             </li>
           </ul>
         </div>
+        <div class="search-history" v-show="searchHistory.length">
+          <h1 class="title">
+            <span class="text">搜索历史</span>
+            <span @click="showConfirm" class="clear">
+              <i class="icon-clear"></i>
+            </span>
+          </h1>
+          <search-list @delete="deleteSearchHistory" @select="addQuery" :searches="searchHistory"></search-list>
+        </div>
       </div>
     </div>
     <div class="suggestWrap">
@@ -30,7 +39,8 @@ import Suggest from "components/suggest/suggest";
 import { getHotKey } from "api/search";
 import { ERR_OK } from "api/config";
 import { playlistMixin, searchMixin } from "common/js/mixin";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
+import SearchList from "base/search-list/search-list";
 
 export default {
   mixins: [playlistMixin, searchMixin],
@@ -41,6 +51,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["searchHistory"]),
     shortcut() {
       return this.hotKey;
     }
@@ -49,6 +60,8 @@ export default {
     this._getHotKey();
   },
   methods: {
+    showConfirm() {},
+    deleteSearchHistory() {},
     onQueryChange(query) {
       this.query = query;
     },
@@ -61,9 +74,6 @@ export default {
       // this.$refs.suggest.refresh()
       // this.$refs.shortcutWrapper.style.bottom = bottom
       // this.$refs.shortcut.refresh()
-    },
-    showConfirm() {
-      // this.$refs.confirm.show()
     },
     _getHotKey() {
       getHotKey().then(res => {
@@ -87,7 +97,7 @@ export default {
   },
   components: {
     SearchBox,
-    // SearchList,
+    SearchList,
     // Scroll,
     // Confirm,
     Suggest

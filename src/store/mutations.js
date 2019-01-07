@@ -29,5 +29,8 @@ export default {
     },
     [types.SET_SCROLL_START](state, payload) {
         state.isScrollStart = payload
+    },
+    [types.SET_SEARCH_HISTORY](state, payload) {
+        state.searchHistory = payload
     }
 }

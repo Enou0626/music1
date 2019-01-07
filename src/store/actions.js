@@ -1,6 +1,7 @@
 import * as type from "./mutation-types";
 import { playMode } from "common/js/config";
 import { shuffle } from "common/js/util";
+import { saveSearch } from "common/js/cache"
 
 function spliceList(playList, item, currentIndex) {
     const sameIndex = playList.findIndex((song) => {
@@ -59,5 +60,10 @@ export default {
         commit(type.SET_SEQUENCE_LIST, playList);
         commit(type.SET_FULL_SCREEN, true);
         commit(type.SET_PLAYING_STATE, true);
+    },
+    addQueryHistory({ commit, state }, item) {
+        const list = saveSearch(item)
+        // console.log(list);
+        commit(type.SET_SEARCH_HISTORY, list)
     }
 }

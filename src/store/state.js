@@ -1,5 +1,6 @@
 import { playMode } from 'common/js/config'
 // import {loadSearch, loadPlay, loadFavorite} from 'common/js/cache'
+import { loadSearch } from 'common/js/cache'
 export default {
     singer: {},
     playing: false,
@@ -10,8 +11,8 @@ export default {
     currentIndex: -1,
     disc: {},
     topList: {},
-    isScrollStart: false
-    // searchHistory: loadSearch(),
+    isScrollStart: false,
+    searchHistory: loadSearch()
     // playHistory: loadPlay(),
     // favoriteList: loadFavorite()
 }
