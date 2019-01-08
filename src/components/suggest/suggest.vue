@@ -91,7 +91,7 @@ export default {
       if (item.type === TYPE_SINGER) {
         this.$router.push(`/singer/${item.singermid}`);
       } else {
-        console.log("selected song");
+        // console.log("selected song");
         this.querySelect(item);
         this.addQueryHistory(item.name);
       }

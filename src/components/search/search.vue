@@ -27,6 +27,7 @@
     <div class="suggestWrap">
       <suggest v-show="query" :query="query"></suggest>
     </div>
+    <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
   </div>
 </template>
 
@@ -34,7 +35,7 @@
 import SearchBox from "base/search-box/search-box";
 // import SearchList from 'base/search-list/search-list'
 // import Scroll from 'base/scroll/scroll'
-// import Confirm from 'base/confirm/confirm'
+import Confirm from "base/confirm/confirm";
 import Suggest from "components/suggest/suggest";
 import { getHotKey } from "api/search";
 import { ERR_OK } from "api/config";
@@ -60,8 +61,12 @@ export default {
     this._getHotKey();
   },
   methods: {
-    showConfirm() {},
-    deleteSearchHistory() {},
+    showConfirm() {
+      this.$refs.confirm.show();
+    },
+    deleteSearchHistory(item) {
+      this.deleteSearchItem(item);
+    },
     onQueryChange(query) {
       this.query = query;
     },
@@ -82,9 +87,7 @@ export default {
         }
       });
     },
-    ...mapActions([
-      // 'clearSearchHistory'
-    ])
+    ...mapActions(["clearSearchHistory", "deleteSearchItem"])
   },
   watch: {
     // query(newQuery) {
@@ -99,7 +102,7 @@ export default {
     SearchBox,
     SearchList,
     // Scroll,
-    // Confirm,
+    Confirm,
     Suggest
   }
 };

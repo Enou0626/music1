@@ -32,10 +32,10 @@ export default
       component: Singer,
       redirect: '/singer/list',
       children: [{
-        path: '/singer/list',
+        path: 'list',
         component: SingerList
       }, {
-        path: '/singer/:id',
+        path: 'detail',
         component: SingerDetail
       }]
     },

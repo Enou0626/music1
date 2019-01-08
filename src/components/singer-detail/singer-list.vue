@@ -78,9 +78,8 @@ export default {
       );
     },
     itemClick(item) {
+      this.$router.push(`/singer/detail`);
       this.setSinger(item);
-      this.$router.push(`/singer/${item.id}`);
-      // console.log(this.singer);
     }
   },
   computed: {

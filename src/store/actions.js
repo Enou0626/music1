@@ -1,7 +1,7 @@
 import * as type from "./mutation-types";
 import { playMode } from "common/js/config";
 import { shuffle } from "common/js/util";
-import { saveSearch } from "common/js/cache"
+import { saveSearch, clearSearch, deleteSearch } from "common/js/cache"
 
 function spliceList(playList, item, currentIndex) {
     const sameIndex = playList.findIndex((song) => {
@@ -63,7 +63,14 @@ export default {
     },
     addQueryHistory({ commit, state }, item) {
         const list = saveSearch(item)
-        // console.log(list);
+        commit(type.SET_SEARCH_HISTORY, list)
+    },
+    clearSearchHistory({ commit, state }, item) {
+        const list = clearSearch()
+        commit(type.SET_SEARCH_HISTORY, list)
+    },
+    deleteSearchItem({ commit }, item) {
+        const list = deleteSearch(item);
         commit(type.SET_SEARCH_HISTORY, list)
     }
 }
